@@ -1,0 +1,53 @@
+{{extend 'layout.html'}}
+
+{{if request.function=='list_posts_by_votes':}}
+<h1>
+    {{=catagory.name.title()}}
+</h1>
+{{=A('sort by datetime',_class='btn btn-primary',_href=URL('list_posts_by_datetime',args=catagory.name))}}
+{{=A('post a new link',_class='btn btn-primary',_href=URL('create_post',args=catagory.name))}}
+{{elif request.function=='list_posts_by_datetime':}}
+<h1>
+    {{=catagory.name.title()}}
+</h1>
+{{=A('sort by Votes',_class='btn btn-primary',_href=URL('list_posts_by_votes',args=catagory.name))}}
+{{=A('post a new link',_class='btn btn-primary',_href=URL('create_post',args=catagory.name))}}
+{{else:}}
+<h1>
+    {{=author(user_id)}}
+</h1>
+
+{{pass}}
+
+
+
+
+
+{{for post in rows:}}
+<div class="well">
+    <table>
+        <tr>
+            <td><span class="votes"> {{=post.votes}}; </span></td>
+            <td><strong> {{=A(post.title,_href=post.url) if post.url else post.title}}</strong></br></td>
+        </tr>
+        <tr>
+            
+            <td>{{=A('comments',_class="btn btn-primary",_href=URL('view_post',args=post.id))}}</td>
+            <td> {{=A('Comment this post',_class="btn btn-primary",_href=URL('comment',args=post.id))}}</td>
+        </tr>
+    </table>
+ 
+    
+    
+   
+    
+</div>
+{{pass}}
+
+{{if page>0:}}
+{{=A('previous',_class='button btn-primary',_href=URL(args=(catagory.name,page-1)))}}
+{{pass}}
+
+{{if len(rows)>=10:}}
+{{=A('next',_class='btn btn-primary',_href=URL(args=(catagory.name,page+1)))}}
+{{pass}}

@@ -1,0 +1,10 @@
+{{extend 'layout.html'}}
+<h2>
+   Edit the Post
+</h2>
+<h3>
+    
+   For catagory {{=catagory.name.title()}}
+</h3>
+
+{{=form}}

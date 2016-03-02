@@ -1,0 +1,20 @@
+{{extend 'layout.html'}}
+<div class='well'>
+   <h1>
+    {{=A(post.title,_href=post.url) if post.url else post.title}}
+</h1>
+    {{if post.created_by==auth.user_id:}}
+    {{=A('Edit this post',_class="btn btn-info",_href=URL('edit_post',args=post.id))}}
+    {{pass}}
+    
+    {{=A('Comment this post',_class="btn btn-info",_href=URL('comment',args=post.id))}}
+    
+    {{=MARKMIN(post.body)}}
+
+</div>
+{{for comment in comments:}}
+<div class="well">
+  On {{=comment.created_on}}, {{=author(comment.created_by)}} said: "{{=comment.body}}"   
+    
+</div>
+{{pass}}

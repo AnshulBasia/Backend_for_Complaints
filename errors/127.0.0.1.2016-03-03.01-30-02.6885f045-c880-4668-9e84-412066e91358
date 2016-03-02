@@ -1,0 +1,470 @@
+(dp1
+S'output'
+p2
+S"<class 'sqlite3.IntegrityError'> foreign key constraint failed"
+p3
+sS'layer'
+p4
+S'C:\\Users\\ANSHUL BASIA\\Desktop\\ACAD\\Sem4\\cop290\\web2py\\applications\\reddit_clone\\models\\db1.py'
+p5
+sS'code'
+p6
+S'# -*- coding: utf-8 -*-\ndb.define_table(\'catagory\',Field(\'name\',\n                requires=(IS_SLUG(),IS_NOT_IN_DB(db,\'catagory.name\'))))\n\ndb.define_table(\'post\',\n                Field(\'catagory\',\'reference catagory\',writable=False,readable=False),\n                Field(\'title\',\'string\',requires=IS_NOT_EMPTY()),\n                Field(\'url\',requires=IS_EMPTY_OR(IS_URL())),\n                Field(\'body\',\'text\',requires=IS_NOT_EMPTY()),\n                Field(\'votes\',\'integer\',default=0,writable=False,readable=False),\n                auth.signature)\n\ndb.define_table(\'vote\',\n                Field(\'post\',\'reference post\'),\n                Field(\'score\',\'integer\',default=+1),\n                auth.signature)\n                \ndb.define_table(\'comm\',\n                Field(\'post\',\'reference post\'),\n                Field(\'parent_comm\',\'reference comm\'),\n                Field(\'votes\',\'integer\'),\n                Field(\'body\',\'text\'),\n                auth.signature)\n\ndb.define_table(\'comm_vote\',\n                Field(\'comm\',\'reference comm\'),\n                Field(\'score\',\'integer\',default=+1),\n                auth.signature)\n\ndef author(id):\n    if id==none:\n        return "Unknown"\n    else:\n        user=db.auth.user(id)\n        return \'%(first_name)s %(last_name)s\' %user\nfrom gluon.contrib.populate import populate\nif db(db.auth_user).count()<2:\n    populate(db.auth_user,100)\n    db.commit()\nif db(db.post).count()<10000:\n    populate(db.post,500)\n    populate(db.comm,10)\n    db.commit()\n'
+p7
+sS'snapshot'
+p8
+(dp9
+S'exception'
+p10
+(dp11
+S'__module__'
+p12
+S"'sqlite3'"
+p13
+sS'__getslice__'
+p14
+S"<method-wrapper '__getslice__' of IntegrityError object>"
+p15
+sS'__str__'
+p16
+S"<method-wrapper '__str__' of IntegrityError object>"
+p17
+sS'__reduce__'
+p18
+S'<built-in method __reduce__ of IntegrityError object>'
+p19
+sS'__dict__'
+p20
+S'{}'
+p21
+sS'__sizeof__'
+p22
+S'<built-in method __sizeof__ of IntegrityError object>'
+p23
+sS'__weakref__'
+p24
+S'None'
+p25
+sS'__init__'
+p26
+S"<method-wrapper '__init__' of IntegrityError object>"
+p27
+sS'__setattr__'
+p28
+S"<method-wrapper '__setattr__' of IntegrityError object>"
+p29
+sS'__reduce_ex__'
+p30
+S'<built-in method __reduce_ex__ of IntegrityError object>'
+p31
+sS'__new__'
+p32
+S'<built-in method __new__ of type object>'
+p33
+sS'__format__'
+p34
+S'<built-in method __format__ of IntegrityError object>'
+p35
+sS'__class__'
+p36
+S"<class 'sqlite3.IntegrityError'>"
+p37
+sS'__doc__'
+p38
+S'None'
+p39
+sS'__getitem__'
+p40
+S"<method-wrapper '__getitem__' of IntegrityError object>"
+p41
+sS'__setstate__'
+p42
+S'<built-in method __setstate__ of IntegrityError object>'
+p43
+sS'__getattribute__'
+p44
+S"<method-wrapper '__getattribute__' of IntegrityError object>"
+p45
+sS'args'
+p46
+S"('foreign key constraint failed',)"
+p47
+sS'__subclasshook__'
+p48
+S'<built-in method __subclasshook__ of type object>'
+p49
+sS'__unicode__'
+p50
+S'<built-in method __unicode__ of IntegrityError object>'
+p51
+sS'__delattr__'
+p52
+S"<method-wrapper '__delattr__' of IntegrityError object>"
+p53
+sS'__repr__'
+p54
+S"<method-wrapper '__repr__' of IntegrityError object>"
+p55
+sS'__hash__'
+p56
+S"<method-wrapper '__hash__' of IntegrityError object>"
+p57
+ssS'evalue'
+p58
+S'foreign key constraint failed'
+p59
+sS'request'
+p60
+cgluon.html
+XML_unpickle
+p61
+(S's\x83o\x00\x00<div><table><tr><td style="font-weight:bold;vertical-align:top;">ajax</td><td style="vertical-align:top;">:</td><td><div>True</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">application</td><td style="vertical-align:top;">:</td><td><div>reddit_clone</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">args</td><td style="vertical-align:top;">:</td><td><div><table></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">cid</td><td style="vertical-align:top;">:</td><td><div>c207678235429</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">client</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">controller</td><td style="vertical-align:top;">:</td><td><div>appadmin</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">cookies</td><td style="vertical-align:top;">:</td><td><div><table><tr><td style="font-weight:bold;vertical-align:top;">session_id_admin</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1-3678f6e2-74e8-42b5-b953-9e43ecf1f27c<table><tr><td style="font-weight:bold;vertical-align:top;">comment</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">domain</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">expires</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">httponly</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">max-age</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">path</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">secure</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">version</td><td style="vertical-align:top;">:</td><td><div></div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_id_complaints</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1-b3d26a55-97b7-4e46-b1b5-d7bd4b0f07be<table><tr><td style="font-weight:bold;vertical-align:top;">comment</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">domain</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">expires</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">httponly</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">max-age</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">path</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">secure</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">version</td><td style="vertical-align:top;">:</td><td><div></div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_id_edit</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1-058adec6-66dc-49c1-988d-29959461c50d<table><tr><td style="font-weight:bold;vertical-align:top;">comment</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">domain</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">expires</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">httponly</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">max-age</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">path</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">secure</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">version</td><td style="vertical-align:top;">:</td><td><div></div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_id_reddit_clone</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1-5ea5994a-285c-4d9d-88b6-ab3311190f1e<table><tr><td style="font-weight:bold;vertical-align:top;">comment</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">domain</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">expires</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">httponly</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">max-age</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">path</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">secure</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">version</td><td style="vertical-align:top;">:</td><td><div></div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_id_welcome</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1-be404ae6-939e-4526-9852-475c93cb56e6<table><tr><td style="font-weight:bold;vertical-align:top;">comment</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">domain</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">expires</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">httponly</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">max-age</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">path</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">secure</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">version</td><td style="vertical-align:top;">:</td><td><div></div></td></tr></table></div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">env</td><td style="vertical-align:top;">:</td><td><div><table><tr><td style="font-weight:bold;vertical-align:top;">HTTP_ACCEPT</td><td style="vertical-align:top;">:</td><td><div>*/*</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_ACCEPT_ENCODING</td><td style="vertical-align:top;">:</td><td><div>gzip, deflate, sdch</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_ACCEPT_LANGUAGE</td><td style="vertical-align:top;">:</td><td><div>en,hi;q=0.8,en-US;q=0.6</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_CONNECTION</td><td style="vertical-align:top;">:</td><td><div>keep-alive</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_COOKIE</td><td style="vertical-align:top;">:</td><td><div>session_id_edit=127.0.0.1-058adec6-66dc-49c1-988d-29959461c50d; session_id_welcome=127.0.0.1-be404ae6-939e-4526-9852-475c93cb56e6; session_id_complaints=127.0.0.1-b3d26a55-97b7-4e46-b1b5-d7bd4b0f07be; session_id_reddit_clone=127.0.0.1-5ea5994a-285c-4d9d-88b6-ab3311190f1e; session_id_admin=127.0.0.1-3678f6e2-74e8-42b5-b953-9e43ecf1f27c</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_HOST</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1:8000</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_REFERER</td><td style="vertical-align:top;">:</td><td><div>http://127.0.0.1:8000/admin/default/edit/reddit_clone/models/menu.py?id=models__menu__py</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_USER_AGENT</td><td style="vertical-align:top;">:</td><td><div>Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.116 Safari/537.36</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_WEB2PY_COMPONENT_ELEMENT</td><td style="vertical-align:top;">:</td><td><div>c207678235429</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_WEB2PY_COMPONENT_LOCATION</td><td style="vertical-align:top;">:</td><td><div>http://127.0.0.1:8000/admin/default/edit/reddit_clone/models/menu.py?id=models__menu__py</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_X_REQUESTED_WITH</td><td style="vertical-align:top;">:</td><td><div>XMLHttpRequest</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">PATH_INFO</td><td style="vertical-align:top;">:</td><td><div>/reddit_clone/appadmin/hooks</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">QUERY_STRING</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">REMOTE_ADDR</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">REMOTE_PORT</td><td style="vertical-align:top;">:</td><td><div>62141</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">REQUEST_METHOD</td><td style="vertical-align:top;">:</td><td><div>GET</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">SCRIPT_NAME</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">SERVER_NAME</td><td style="vertical-align:top;">:</td><td><div>ANSH_27</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">SERVER_PORT</td><td style="vertical-align:top;">:</td><td><div>8000</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">SERVER_PROTOCOL</td><td style="vertical-align:top;">:</td><td><div>HTTP/1.1</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">SERVER_SOFTWARE</td><td style="vertical-align:top;">:</td><td><div>Rocket 1.2.6</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">app_folders</td><td style="vertical-align:top;">:</td><td><div>set([&#x27;C:\\\\Users\\\\ANSHUL BASIA\\\\Desktop\\\\ACAD\\\\Sem4\\\\cop290\\\\web2py\\\\applications\\\\admin\\\\&#x27;, &#x27;C:\\\\Users\\\\ANSHUL BASIA\\\\Desktop\\\\ACAD\\\\Sem4\\\\cop290\\\\web2py\\\\applications\\\\welcome\\\\&#x27;, &#x27;C:\\\\Users\\\\ANSHUL BASIA\\\\Desktop\\\\ACAD\\\\Sem4\\\\cop290\\\\web2py\\\\applications\\\\edit\\\\&#x27;, &#x27;C:\\\\Users\\\\ANSHUL BASIA\\\\Desktop\\\\ACAD\\\\Sem4\\\\cop290\\\\web2py\\\\applications\\\\Complaints\\\\&#x27;, &#x27;C:\\\\Users\\\\ANSHUL BASIA\\\\Desktop\\\\ACAD\\\\Sem4\\\\cop290\\\\web2py\\\\applications\\\\reddit_clone\\\\&#x27;])</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">applications_parent</td><td style="vertical-align:top;">:</td><td><div>C:\\Users\\ANSHUL BASIA\\Desktop\\ACAD\\Sem4\\cop290\\web2py</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">cmd_args</td><td style="vertical-align:top;">:</td><td><div><table></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">cmd_options</td><td style="vertical-align:top;">:</td><td><div>&lt;Values at 0x2593828: {&#x27;verbose&#x27;: False, &#x27;ip&#x27;: &#x27;127.0.0.1&#x27;, &#x27;debuglevel&#x27;: 30, &#x27;with_scheduler&#x27;: False, &#x27;ips&#x27;: [&#x27;2001:0:9d38:6ab8:1435:c604:c49e:2e35&#x27;, &#x27;192.168.1.103&#x27;, &#x27;fe80::f4e8:1a6a:a38f:c1a9%8&#x27;, &#x27;fe80::1435:c604:c49e:2e35%4&#x27;], &#x27;shutdown_timeout&#x27;: 5, &#x27;taskbar&#x27;: False, &#x27;with_coverage&#x27;: False, &#x27;scheduler_groups&#x27;: None, &#x27;port&#x27;: 8000, &#x27;maxthreads&#x27;: None, &#x27;softcron&#x27;: False, &#x27;server_name&#x27;: &#x27;ANSH_27&#x27;, &#x27;bpython&#x27;: False, &#x27;nogui&#x27;: False, &#x27;pid_filename&#x27;: &#x27;httpserver.pid&#x27;, &#x27;print_errors&#x27;: False, &#x27;extcron&#x27;: False, &#x27;runcron&#x27;: False, &#x27;run_system_tests&#x27;: False, &#x27;test&#x27;: None, &#x27;folder&#x27;: &#x27;C:\\\\Users\\\\ANSHUL BASIA\\\\Desktop\\\\ACAD\\\\Sem4\\\\cop290\\\\web2py&#x27;, &#x27;config&#x27;: &#x27;&#x27;, &#x27;minthreads&#x27;: None, &#x27;shell&#x27;: None, &#x27;run&#x27;: &#x27;&#x27;, &#x27;log_filename&#x27;: &#x27;httpserver.log&#x27;, &#x27;profiler_dir&#x27;: None, &#x27;args&#x27;: [&#x27;&#x27;], &#x27;socket_timeout&#x27;: 5, &#x27;ssl_ca_certificate&#x27;: None, &#x27;scheduler&#x27;: None, &#x27;interfaces&#x27;: None, &#x27;ssl_private_key&#x27;: &#x27;&#x27;, &#x27;gae&#x27;: None, &#x27;password&#x27;: &#x27;&lt;ask&gt;&#x27;, &#x27;request_queue_size&#x27;: 5, &#x27;ssl_certificate&#x27;: &#x27;&#x27;, &#x27;cronjob&#x27;: False, &#x27;numthreads&#x27;: None, &#x27;quiet&#x27;: False, &#x27;import_models&#x27;: False, &#x27;timeout&#x27;: 10, &#x27;plain&#x27;: False, &#x27;nobanner&#x27;: False}&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">db_sessions</td><td style="vertical-align:top;">:</td><td><div>set([])</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">debugging</td><td style="vertical-align:top;">:</td><td><div>True</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">gluon_parent</td><td style="vertical-align:top;">:</td><td><div>C:\\Users\\ANSHUL BASIA\\Desktop\\ACAD\\Sem4\\cop290\\web2py</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_accept</td><td style="vertical-align:top;">:</td><td><div>*/*</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_accept_encoding</td><td style="vertical-align:top;">:</td><td><div>gzip, deflate, sdch</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_accept_language</td><td style="vertical-align:top;">:</td><td><div>en,hi;q=0.8,en-US;q=0.6</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_connection</td><td style="vertical-align:top;">:</td><td><div>keep-alive</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_cookie</td><td style="vertical-align:top;">:</td><td><div>session_id_edit=127.0.0.1-058adec6-66dc-49c1-988d-29959461c50d; session_id_welcome=127.0.0.1-be404ae6-939e-4526-9852-475c93cb56e6; session_id_complaints=127.0.0.1-b3d26a55-97b7-4e46-b1b5-d7bd4b0f07be; session_id_reddit_clone=127.0.0.1-5ea5994a-285c-4d9d-88b6-ab3311190f1e; session_id_admin=127.0.0.1-3678f6e2-74e8-42b5-b953-9e43ecf1f27c</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_host</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1:8000</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_referer</td><td style="vertical-align:top;">:</td><td><div>http://127.0.0.1:8000/admin/default/edit/reddit_clone/models/menu.py?id=models__menu__py</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_user_agent</td><td style="vertical-align:top;">:</td><td><div>Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.116 Safari/537.36</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_web2py_component_element</td><td style="vertical-align:top;">:</td><td><div>c207678235429</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_web2py_component_location</td><td style="vertical-align:top;">:</td><td><div>http://127.0.0.1:8000/admin/default/edit/reddit_clone/models/menu.py?id=models__menu__py</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_x_requested_with</td><td style="vertical-align:top;">:</td><td><div>XMLHttpRequest</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_jython</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_pypy</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_source</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">local_hosts</td><td style="vertical-align:top;">:</td><td><div><table><tr><td><div>ANSH_27</div></td></tr><tr><td><div>fe80::1435:c604:c49e:2e35%4</div></td></tr><tr><td><div>2001:0:9d38:6ab8:1435:c604:c49e:2e35</div></td></tr><tr><td><div>192.168.1.103</div></td></tr><tr><td><div>::ffff:127.0.0.1</div></td></tr><tr><td><div>::1</div></td></tr><tr><td><div>fe80::f4e8:1a6a:a38f:c1a9%8</div></td></tr><tr><td><div>127.0.0.1</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">path_info</td><td style="vertical-align:top;">:</td><td><div>/reddit_clone/appadmin/hooks</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">query_string</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">remote_addr</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">remote_port</td><td style="vertical-align:top;">:</td><td><div>62141</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">request_method</td><td style="vertical-align:top;">:</td><td><div>GET</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">request_uri</td><td style="vertical-align:top;">:</td><td><div>/reddit_clone/appadmin/hooks</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">script_name</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">server_name</td><td style="vertical-align:top;">:</td><td><div>ANSH_27</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">server_port</td><td style="vertical-align:top;">:</td><td><div>8000</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">server_protocol</td><td style="vertical-align:top;">:</td><td><div>HTTP/1.1</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">server_software</td><td style="vertical-align:top;">:</td><td><div>Rocket 1.2.6</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">web2py_path</td><td style="vertical-align:top;">:</td><td><div>C:\\Users\\ANSHUL BASIA\\Desktop\\ACAD\\Sem4\\cop290\\web2py</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">web2py_version</td><td style="vertical-align:top;">:</td><td><div>2.13.4-stable+timestamp.2015.12.26.04.59.39</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi.errors</td><td style="vertical-align:top;">:</td><td><div>&lt;open file &#x27;&lt;stderr&gt;&#x27;, mode &#x27;w&#x27; at 0x00A5D0D0&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi.file_wrapper</td><td style="vertical-align:top;">:</td><td><div>&lt;class wsgiref.util.FileWrapper at 0x02C96180&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi.input</td><td style="vertical-align:top;">:</td><td><div>&lt;socket._fileobject object at 0x093D1970&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi.multiprocess</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi.multithread</td><td style="vertical-align:top;">:</td><td><div>True</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi.run_once</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi.url_scheme</td><td style="vertical-align:top;">:</td><td><div>http</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi.version</td><td style="vertical-align:top;">:</td><td><div><table><tr><td><div>1</div></td></tr><tr><td><div>0</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi_errors</td><td style="vertical-align:top;">:</td><td><div>&lt;open file &#x27;&lt;stderr&gt;&#x27;, mode &#x27;w&#x27; at 0x00A5D0D0&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi_file_wrapper</td><td style="vertical-align:top;">:</td><td><div>&lt;class wsgiref.util.FileWrapper at 0x02C96180&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi_input</td><td style="vertical-align:top;">:</td><td><div>&lt;socket._fileobject object at 0x093D1970&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi_multiprocess</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi_multithread</td><td style="vertical-align:top;">:</td><td><div>True</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi_run_once</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi_url_scheme</td><td style="vertical-align:top;">:</td><td><div>http</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi_version</td><td style="vertical-align:top;">:</td><td><div><table><tr><td><div>1</div></td></tr><tr><td><div>0</div></td></tr></table></div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">extension</td><td style="vertical-align:top;">:</td><td><div>html</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">folder</td><td style="vertical-align:top;">:</td><td><div>C:\\Users\\ANSHUL BASIA\\Desktop\\ACAD\\Sem4\\cop290\\web2py\\applications\\reddit_clone\\</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">function</td><td style="vertical-align:top;">:</td><td><div>hooks</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">global_settings</td><td style="vertical-align:top;">:</td><td><div><table><tr><td style="font-weight:bold;vertical-align:top;">app_folders</td><td style="vertical-align:top;">:</td><td><div>set([&#x27;C:\\\\Users\\\\ANSHUL BASIA\\\\Desktop\\\\ACAD\\\\Sem4\\\\cop290\\\\web2py\\\\applications\\\\admin\\\\&#x27;, &#x27;C:\\\\Users\\\\ANSHUL BASIA\\\\Desktop\\\\ACAD\\\\Sem4\\\\cop290\\\\web2py\\\\applications\\\\welcome\\\\&#x27;, &#x27;C:\\\\Users\\\\ANSHUL BASIA\\\\Desktop\\\\ACAD\\\\Sem4\\\\cop290\\\\web2py\\\\applications\\\\edit\\\\&#x27;, &#x27;C:\\\\Users\\\\ANSHUL BASIA\\\\Desktop\\\\ACAD\\\\Sem4\\\\cop290\\\\web2py\\\\applications\\\\Complaints\\\\&#x27;, &#x27;C:\\\\Users\\\\ANSHUL BASIA\\\\Desktop\\\\ACAD\\\\Sem4\\\\cop290\\\\web2py\\\\applications\\\\reddit_clone\\\\&#x27;])</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">applications_parent</td><td style="vertical-align:top;">:</td><td><div>C:\\Users\\ANSHUL BASIA\\Desktop\\ACAD\\Sem4\\cop290\\web2py</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">cmd_args</td><td style="vertical-align:top;">:</td><td><div><table></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">cmd_options</td><td style="vertical-align:top;">:</td><td><div>&lt;Values at 0x2593828: {&#x27;verbose&#x27;: False, &#x27;ip&#x27;: &#x27;127.0.0.1&#x27;, &#x27;debuglevel&#x27;: 30, &#x27;with_scheduler&#x27;: False, &#x27;ips&#x27;: [&#x27;2001:0:9d38:6ab8:1435:c604:c49e:2e35&#x27;, &#x27;192.168.1.103&#x27;, &#x27;fe80::f4e8:1a6a:a38f:c1a9%8&#x27;, &#x27;fe80::1435:c604:c49e:2e35%4&#x27;], &#x27;shutdown_timeout&#x27;: 5, &#x27;taskbar&#x27;: False, &#x27;with_coverage&#x27;: False, &#x27;scheduler_groups&#x27;: None, &#x27;port&#x27;: 8000, &#x27;maxthreads&#x27;: None, &#x27;softcron&#x27;: False, &#x27;server_name&#x27;: &#x27;ANSH_27&#x27;, &#x27;bpython&#x27;: False, &#x27;nogui&#x27;: False, &#x27;pid_filename&#x27;: &#x27;httpserver.pid&#x27;, &#x27;print_errors&#x27;: False, &#x27;extcron&#x27;: False, &#x27;runcron&#x27;: False, &#x27;run_system_tests&#x27;: False, &#x27;test&#x27;: None, &#x27;folder&#x27;: &#x27;C:\\\\Users\\\\ANSHUL BASIA\\\\Desktop\\\\ACAD\\\\Sem4\\\\cop290\\\\web2py&#x27;, &#x27;config&#x27;: &#x27;&#x27;, &#x27;minthreads&#x27;: None, &#x27;shell&#x27;: None, &#x27;run&#x27;: &#x27;&#x27;, &#x27;log_filename&#x27;: &#x27;httpserver.log&#x27;, &#x27;profiler_dir&#x27;: None, &#x27;args&#x27;: [&#x27;&#x27;], &#x27;socket_timeout&#x27;: 5, &#x27;ssl_ca_certificate&#x27;: None, &#x27;scheduler&#x27;: None, &#x27;interfaces&#x27;: None, &#x27;ssl_private_key&#x27;: &#x27;&#x27;, &#x27;gae&#x27;: None, &#x27;password&#x27;: &#x27;&lt;ask&gt;&#x27;, &#x27;request_queue_size&#x27;: 5, &#x27;ssl_certificate&#x27;: &#x27;&#x27;, &#x27;cronjob&#x27;: False, &#x27;numthreads&#x27;: None, &#x27;quiet&#x27;: False, &#x27;import_models&#x27;: False, &#x27;timeout&#x27;: 10, &#x27;plain&#x27;: False, &#x27;nobanner&#x27;: False}&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">db_sessions</td><td style="vertical-align:top;">:</td><td><div>set([])</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">debugging</td><td style="vertical-align:top;">:</td><td><div>True</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">gluon_parent</td><td style="vertical-align:top;">:</td><td><div>C:\\Users\\ANSHUL BASIA\\Desktop\\ACAD\\Sem4\\cop290\\web2py</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_jython</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_pypy</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_source</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">local_hosts</td><td style="vertical-align:top;">:</td><td><div><table><tr><td><div>ANSH_27</div></td></tr><tr><td><div>fe80::1435:c604:c49e:2e35%4</div></td></tr><tr><td><div>2001:0:9d38:6ab8:1435:c604:c49e:2e35</div></td></tr><tr><td><div>192.168.1.103</div></td></tr><tr><td><div>::ffff:127.0.0.1</div></td></tr><tr><td><div>::1</div></td></tr><tr><td><div>fe80::f4e8:1a6a:a38f:c1a9%8</div></td></tr><tr><td><div>127.0.0.1</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">web2py_version</td><td style="vertical-align:top;">:</td><td><div>2.13.4-stable+timestamp.2015.12.26.04.59.39</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_https</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_local</td><td style="vertical-align:top;">:</td><td><div>True</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_restful</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_scheduler</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_shell</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">now</td><td style="vertical-align:top;">:</td><td><div>datetime.datetime(2016, 3, 3, 1, 30, 2, 137000)</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">raw_args</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">raw_extension</td><td style="vertical-align:top;">:</td><td><div>None</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">url</td><td style="vertical-align:top;">:</td><td><div>/reddit_clone/appadmin/hooks</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">utcnow</td><td style="vertical-align:top;">:</td><td><div>datetime.datetime(2016, 3, 2, 20, 0, 2, 137000)</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi</td><td style="vertical-align:top;">:</td><td><div>&lt;gluon.main.LazyWSGI object at 0x0BDCBE10&gt;</div></td></tr></table></div>'
+tRp62
+sS'frames'
+p63
+(lp64
+(dp65
+S'file'
+p66
+S'C:\\Users\\ANSHUL BASIA\\Desktop\\ACAD\\Sem4\\cop290\\web2py\\gluon\\restricted.py'
+p67
+sS'dump'
+p68
+(dp69
+S'environment'
+p70
+S"{'A': <class 'gluon.html.A'>, 'ANY_OF': <class 'gluon.validators.ANY_OF'>, 'ASSIGNJS': <function ASSIGNJS>, 'AppConfig': <function AppConfig>, 'Auth': <class 'gluon.tools.Auth'>, 'B': <class 'gluon.html.B'>, 'BEAUTIFY': <class 'gluon.html.BEAUTIFY'>, 'BODY': <class 'gluon.html.BODY'>, 'BR': <class 'gluon.html.BR'>, 'BUTTON': <class 'gluon.html.BUTTON'>, ...}"
+p71
+sS'ccode'
+p72
+S'<code object <module> at 0B64F770, file "C:\\User...applications\\reddit_clone\\models\\db1.py", line 2>'
+p73
+ssS'lnum'
+p74
+I227
+sS'lines'
+p75
+(dp76
+I224
+S'            ccode = code'
+p77
+sI225
+S'        else:'
+p78
+sI226
+S'            ccode = compile2(code, layer)'
+p79
+sI227
+S'        exec ccode in environment'
+p80
+sI228
+S'    except HTTP:'
+p81
+sI229
+S'        raise'
+p82
+sI230
+S'    except RestrictedError:'
+p83
+sI231
+S'        # do not encapsulate (obfuscate) the original RestrictedError'
+p84
+sI222
+S'    try:'
+p85
+sI223
+S'        if isinstance(code, types.CodeType):'
+p86
+ssS'call'
+p87
+S'(code="# -*- coding: utf-8 -*-\\ndb.define_table(\'catagor...st,500)\\n    populate(db.comm,10)\\n    db.commit()\\n", environment={\'A\': <class \'gluon.html.A\'>, \'ANY_OF\': <class \'gluon.validators.ANY_OF\'>, \'ASSIGNJS\': <function ASSIGNJS>, \'AppConfig\': <function AppConfig>, \'Auth\': <class \'gluon.tools.Auth\'>, \'B\': <class \'gluon.html.B\'>, \'BEAUTIFY\': <class \'gluon.html.BEAUTIFY\'>, \'BODY\': <class \'gluon.html.BODY\'>, \'BR\': <class \'gluon.html.BR\'>, \'BUTTON\': <class \'gluon.html.BUTTON\'>, ...}, layer=r\'C:\\Users\\ANSHUL BASIA\\Desktop\\ACAD\\Sem4\\cop290\\web2py\\applications\\reddit_clone\\models\\db1.py\')'
+p88
+sS'func'
+p89
+S'restricted'
+p90
+sa(dp91
+g66
+S'C:\\Users\\ANSHUL BASIA\\Desktop\\ACAD\\Sem4\\cop290\\web2py\\applications\\reddit_clone\\models\\db1.py'
+p92
+sg68
+(dp93
+S'db.comm'
+p94
+S'<Table comm (id,post,parent_comm,votes,body,is_a...e,created_on,created_by,modified_on,modified_by)>'
+p95
+sS'db'
+p96
+S'<DAL uri="sqlite://storage.sqlite">'
+p97
+sS'populate'
+p98
+S'<function populate>'
+p99
+ssg74
+I42
+sg75
+(dp100
+I34
+S'        user=db.auth.user(id)'
+p101
+sI35
+S"        return '%(first_name)s %(last_name)s' %user"
+p102
+sI36
+S'from gluon.contrib.populate import populate'
+p103
+sI37
+S'if db(db.auth_user).count()<2:'
+p104
+sI38
+S'    populate(db.auth_user,100)'
+p105
+sI39
+S'    db.commit()'
+p106
+sI40
+S'if db(db.post).count()<10000:'
+p107
+sI41
+S'    populate(db.post,500)'
+p108
+sI42
+S'    populate(db.comm,10)'
+p109
+sI43
+S'    db.commit()'
+p110
+ssg87
+S'()'
+p111
+sg89
+S'<module>'
+p112
+sa(dp113
+g66
+S'C:\\Users\\ANSHUL BASIA\\Desktop\\ACAD\\Sem4\\cop290\\web2py\\gluon\\contrib\\populate.py'
+p114
+sg68
+(dp115
+S'table'
+p116
+S'<Table comm (id,post,parent_comm,votes,body,is_a...e,created_on,created_by,modified_on,modified_by)>'
+p117
+sS'record'
+p118
+S"{'body': '240 white by u.s.\\nSome modern divers come near e...ns such remarkable success to begin to get from.\\n', 'created_by': <function lazy_user>, 'created_on': datetime.datetime(2016, 3, 3, 1, 30, 2, 137000), 'is_active': True, 'modified_by': <function lazy_user>, 'modified_on': datetime.datetime(2016, 3, 3, 1, 30, 2, 137000), 'parent_comm': 0, 'post': 15076L, 'votes': 242}"
+p119
+sS'table.insert'
+p120
+S'<bound method Table.insert of <Table comm (id,po...,created_on,created_by,modified_on,modified_by)>>'
+p121
+ssg74
+I104
+sg75
+(dp122
+I99
+S'    generator = populate_generator(table, default=default,'
+p123
+sI100
+S'                                   compute=compute, contents=contents)'
+p124
+sI101
+S'    if n is not None:'
+p125
+sI102
+S'        for k,record in enumerate(generator):'
+p126
+sI103
+S'            if k>=n: break'
+p127
+sI104
+S'            table.insert(**record)'
+p128
+sI105
+S'        table._db.commit()'
+p129
+sI106
+S''
+sI107
+S'    return generator'
+p130
+sI108
+S''
+ssg87
+S'(table=<Table comm (id,post,parent_comm,votes,body,is_a...e,created_on,created_by,modified_on,modified_by)>, n=10, default=True, compute=False, contents={})'
+p131
+sg89
+S'populate'
+p132
+sa(dp133
+g66
+S'C:\\Users\\ANSHUL BASIA\\Desktop\\ACAD\\Sem4\\cop290\\web2py\\gluon\\packages\\dal\\pydal\\objects.py'
+p134
+sg68
+(dp135
+S'self._listify'
+p136
+S'<bound method Table._listify of <Table comm (id,...,created_on,created_by,modified_on,modified_by)>>'
+p137
+sS'fields'
+p138
+S"{'body': '240 white by u.s.\\nSome modern divers come near e...ns such remarkable success to begin to get from.\\n', 'created_by': <function lazy_user>, 'created_on': datetime.datetime(2016, 3, 3, 1, 30, 2, 137000), 'is_active': True, 'modified_by': <function lazy_user>, 'modified_on': datetime.datetime(2016, 3, 3, 1, 30, 2, 137000), 'parent_comm': 0, 'post': 15076L, 'votes': 242}"
+p139
+sS'self'
+p140
+S'<Table comm (id,post,parent_comm,votes,body,is_a...e,created_on,created_by,modified_on,modified_by)>'
+p141
+sS'ret'
+p142
+S'undefined'
+p143
+sS'self._db._adapter'
+p144
+S'<pydal.adapters.sqlite.SQLiteAdapter object>'
+p145
+sS'self._db._adapter.insert'
+p146
+S'<bound method SQLiteAdapter.insert of <pydal.adapters.sqlite.SQLiteAdapter object>>'
+p147
+sS'self._db'
+p148
+S'<DAL uri="sqlite://storage.sqlite">'
+p149
+ssg74
+I731
+sg75
+(dp150
+I726
+S'    def insert(self, **fields):'
+p151
+sI727
+S'        fields = self._defaults(fields)'
+p152
+sI728
+S'        self._attempt_upload(fields)'
+p153
+sI729
+S'        if any(f(fields) for f in self._before_insert):'
+p154
+sI730
+S'            return 0'
+p155
+sI731
+S'        ret = self._db._adapter.insert(self, self._listify(fields))'
+p156
+sI732
+S'        if ret and self._after_insert:'
+p157
+sI733
+S'            fields = Row(fields)'
+p158
+sI734
+S'            [f(fields, ret) for f in self._after_insert]'
+p159
+sI735
+S'        return ret'
+p160
+ssg87
+S"(self=<Table comm (id,post,parent_comm,votes,body,is_a...e,created_on,created_by,modified_on,modified_by)>, **fields={'body': '240 white by u.s.\\nSome modern divers come near e...ns such remarkable success to begin to get from.\\n', 'created_by': <function lazy_user>, 'created_on': datetime.datetime(2016, 3, 3, 1, 30, 2, 137000), 'is_active': True, 'modified_by': <function lazy_user>, 'modified_on': datetime.datetime(2016, 3, 3, 1, 30, 2, 137000), 'parent_comm': 0, 'post': 15076L, 'votes': 242})"
+p161
+sg89
+S'insert'
+p162
+sa(dp163
+g66
+S'C:\\Users\\ANSHUL BASIA\\Desktop\\ACAD\\Sem4\\cop290\\web2py\\gluon\\packages\\dal\\pydal\\adapters\\base.py'
+p164
+sg68
+(dp165
+S'e'
+S"IntegrityError('foreign key constraint failed',)"
+p166
+ssg74
+I746
+sg75
+(dp167
+I741
+S'            self.execute(query)'
+p168
+sI742
+S'        except Exception:'
+p169
+sI743
+S'            e = sys.exc_info()[1]'
+p170
+sI744
+S"            if hasattr(table,'_on_insert_error'):"
+p171
+sI745
+S'                return table._on_insert_error(table,fields,e)'
+p172
+sI746
+S'            raise e'
+p173
+sI747
+S"        if hasattr(table, '_primarykey'):"
+p174
+sI748
+S'            mydict = dict([(k[0].name, k[1]) for k in fields if k[0].name in table._primarykey])'
+p175
+sI749
+S'            if mydict != {}:'
+p176
+sI750
+S'                return mydict'
+p177
+ssg87
+S"(self=<pydal.adapters.sqlite.SQLiteAdapter object>, table=<Table comm (id,post,parent_comm,votes,body,is_a...e,created_on,created_by,modified_on,modified_by)>, fields=[(<pydal.objects.Field object>, '240 white by u.s.\\nSome modern divers come near e...ns such remarkable success to begin to get from.\\n'), (<pydal.objects.Field object>, 242), (<pydal.objects.Field object>, <function lazy_user>), (<pydal.objects.Field object>, True), (<pydal.objects.Field object>, <function lazy_user>), (<pydal.objects.Field object>, 0), (<pydal.objects.Field object>, datetime.datetime(2016, 3, 3, 1, 30, 2, 137000)), (<pydal.objects.Field object>, datetime.datetime(2016, 3, 3, 1, 30, 2, 137000)), (<pydal.objects.Field object>, 15076L)])"
+p178
+sg89
+g162
+sasS'pyver'
+p179
+S'Python 2.7.9: C:\\Users\\ANSHUL BASIA\\Desktop\\ACAD\\Sem4\\cop290\\web2py\\web2py.exe (prefix: C:\\Python27)'
+p180
+sS'session'
+p181
+g61
+(S's\x9c\x00\x00\x00<div><table><tr><td style="font-weight:bold;vertical-align:top;">flash</td><td style="vertical-align:top;">:</td><td><div>None</div></td></tr></table></div>'
+tRp182
+sS'etype'
+p183
+S"<class 'sqlite3.IntegrityError'>"
+p184
+sS'date'
+p185
+S'Thu Mar 03 01:30:09 2016'
+p186
+sS'response'
+p187
+g61
+(S's]\x18\x00\x00<div><table><tr><td style="font-weight:bold;vertical-align:top;">body</td><td style="vertical-align:top;">:</td><td><div>&lt;cStringIO.StringO object at 0x0B91A7C0&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">cookies</td><td style="vertical-align:top;">:</td><td><div><table><tr><td style="font-weight:bold;vertical-align:top;">session_id_reddit_clone</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1-5ea5994a-285c-4d9d-88b6-ab3311190f1e<table><tr><td style="font-weight:bold;vertical-align:top;">comment</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">domain</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">expires</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">httponly</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">max-age</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">path</td><td style="vertical-align:top;">:</td><td><div>/</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">secure</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">version</td><td style="vertical-align:top;">:</td><td><div></div></td></tr></table></div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">delimiters</td><td style="vertical-align:top;">:</td><td><div><table><tr><td><div>{{</div></td></tr><tr><td><div>}}</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">files</td><td style="vertical-align:top;">:</td><td><div><table></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">flash</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">form_label_separator</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">formstyle</td><td style="vertical-align:top;">:</td><td><div>bootstrap3_inline</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">generic_patterns</td><td style="vertical-align:top;">:</td><td><div><table><tr><td><div>*</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">headers</td><td style="vertical-align:top;">:</td><td><div><table><tr><td style="font-weight:bold;vertical-align:top;">X-Powered-By</td><td style="vertical-align:top;">:</td><td><div>web2py</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">menu</td><td style="vertical-align:top;">:</td><td><div><table></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">meta</td><td style="vertical-align:top;">:</td><td><div><table></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">models_to_run</td><td style="vertical-align:top;">:</td><td><div><table><tr><td><div>^\\w+\\.py$</div></td></tr><tr><td><div>^appadmin/\\w+\\.py$</div></td></tr><tr><td><div>^appadmin/hooks/\\w+\\.py$</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">postprocessing</td><td style="vertical-align:top;">:</td><td><div><table></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_client</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_cookie_compression_level</td><td style="vertical-align:top;">:</td><td><div>None</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_cookie_expires</td><td style="vertical-align:top;">:</td><td><div>None</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_cookie_key</td><td style="vertical-align:top;">:</td><td><div>None</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_data_name</td><td style="vertical-align:top;">:</td><td><div>session_data_reddit_clone</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_file</td><td style="vertical-align:top;">:</td><td><div>&lt;open file &#x27;C:\\\\Users\\\\ANSHUL BASIA\\\\Desktop\\\\ACAD\\\\Sem4\\\\cop290\\\\web2py\\\\applications\\\\reddit_clone\\\\sessions\\\\17a\\\\08b\\\\127.0.0.1-5ea5994a-285c-4d9d-88b6-ab3311190f1e&#x27;, mode &#x27;rb+&#x27; at 0x094621D8&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_filename</td><td style="vertical-align:top;">:</td><td><div>C:\\Users\\ANSHUL BASIA\\Desktop\\ACAD\\Sem4\\cop290\\web2py\\applications\\reddit_clone\\sessions\\127.0.0.1-5ea5994a-285c-4d9d-88b6-ab3311190f1e</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_hash</td><td style="vertical-align:top;">:</td><td><div>9fb11e22ca1224881e2db117a57e7dda</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_id</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1-5ea5994a-285c-4d9d-88b6-ab3311190f1e</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_id_name</td><td style="vertical-align:top;">:</td><td><div>session_id_reddit_clone</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_locked</td><td style="vertical-align:top;">:</td><td><div>True</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_masterapp</td><td style="vertical-align:top;">:</td><td><div>reddit_clone</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_new</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_storage_type</td><td style="vertical-align:top;">:</td><td><div>file</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">status</td><td style="vertical-align:top;">:</td><td><div>200</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">view</td><td style="vertical-align:top;">:</td><td><div>appadmin/hooks.html</div></td></tr></table></div>'
+tRp188
+sS'locals'
+p189
+(dp190
+S'fields'
+p191
+S"[(<pydal.objects.Field object>, '240 white by u.s.\\nSome modern divers come near e...ns such remarkable success to begin to get from.\\n'), (<pydal.objects.Field object>, 242), (<pydal.objects.Field object>, <function lazy_user>), (<pydal.objects.Field object>, True), (<pydal.objects.Field object>, <function lazy_user>), (<pydal.objects.Field object>, 0), (<pydal.objects.Field object>, datetime.datetime(2016, 3, 3, 1, 30, 2, 137000)), (<pydal.objects.Field object>, datetime.datetime(2016, 3, 3, 1, 30, 2, 137000)), (<pydal.objects.Field object>, 15076L)]"
+p192
+sS'self'
+p193
+S'<pydal.adapters.sqlite.SQLiteAdapter object>'
+p194
+sS'e'
+S"IntegrityError('foreign key constraint failed',)"
+p195
+sS'table'
+p196
+S'<Table comm (id,post,parent_comm,votes,body,is_a...e,created_on,created_by,modified_on,modified_by)>'
+p197
+sS'query'
+p198
+S'"INSERT INTO comm(body,votes,modified_by,is_activ...016-03-03 01:30:02\',\'2016-03-03 01:30:02\',15076);"'
+p199
+sssS'traceback'
+p200
+S'Traceback (most recent call last):\n  File "C:\\Users\\ANSHUL BASIA\\Desktop\\ACAD\\Sem4\\cop290\\web2py\\gluon\\restricted.py", line 227, in restricted\n    exec ccode in environment\n  File "C:\\Users\\ANSHUL BASIA\\Desktop\\ACAD\\Sem4\\cop290\\web2py\\applications\\reddit_clone\\models\\db1.py", line 42, in <module>\n    populate(db.comm,10)\n  File "C:\\Users\\ANSHUL BASIA\\Desktop\\ACAD\\Sem4\\cop290\\web2py\\gluon\\contrib\\populate.py", line 104, in populate\n    table.insert(**record)\n  File "C:\\Users\\ANSHUL BASIA\\Desktop\\ACAD\\Sem4\\cop290\\web2py\\gluon\\packages\\dal\\pydal\\objects.py", line 731, in insert\n    ret = self._db._adapter.insert(self, self._listify(fields))\n  File "C:\\Users\\ANSHUL BASIA\\Desktop\\ACAD\\Sem4\\cop290\\web2py\\gluon\\packages\\dal\\pydal\\adapters\\base.py", line 746, in insert\n    raise e\nIntegrityError: foreign key constraint failed\n'
+p201
+s.
