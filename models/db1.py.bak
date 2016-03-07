@@ -17,7 +17,7 @@ db.define_table('vote',
                 auth.signature)
                 
 db.define_table('comm',
-                Field('post','reference post'),
+                Field('post','reference post',writable=False,readable=False),
                 Field('parent_comm','reference comm',writable=False,readable=False),
                 Field('votes','integer',default=0,writable=False,readable=False),
                 Field('body','text'),

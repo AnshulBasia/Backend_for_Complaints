@@ -1,13 +1,17 @@
 {{extend 'layout.html'}}
-<div class='well'>
+<div class="well">
    <h1>
     {{=A(post.title,_href=post.url) if post.url else post.title}}
 </h1>
-    {{if post.created_by==auth.user_id:}}
+    {{if post.created_by==auth.user_id and auth.user:}}
     {{=A('Edit this post',_class="btn btn-info",_href=URL('edit_post',args=post.id))}}
+    {{else:}}
+    {{if not auth.user:}}
+    {{=A('Login to edit (if you created this post)',_class="btn btn-info",_href=URL('user/login',vars=dict(_next=URL(args=request.args))))}}
+    {{pass}}
     {{pass}}
     
-    {{=A('Comment this post',_class="btn btn-info",_href=URL('comment',args=post.id))}}
+   
     
     {{=MARKMIN(post.body)}}
 
