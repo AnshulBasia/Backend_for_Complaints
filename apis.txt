@@ -1,0 +1,40 @@
+
+Login:?  ? /default/login.json?userid=<username>&password=<password>  
+
+Logout:? /default/logout.json 
+
+
+General post with id: 
+
+http://127.0.0.1:8000/Backend_for_Complaints/api/get_post/<id>.json
+
+
+all postes with level:
+http://127.0.0.1:8000/Backend_for_Complaints/api/post/x.json
+
+x=
+ 1  Insti
+ 2  Hostel
+ 3  Individual
+
+upvote or downvote by id of post:
+
+http://127.0.0.1:8000/Backend_for_Complaints/api/up_downvote.json?id=x&vote=y
+
+
+votes of post with id x = prev_votes+y
+# a user should be allowed to do +1 or -1, nothing else
+
+For posts by a user:
+
+http://127.0.0.1:8000/Backend_for_Complaints/api/post/by-user/<user_id>.json
+
+Change the status of complaint:
+
+http://127.0.0.1:8000/Backend_for_Complaints/api/set_resolved.json?id=<post.id>&status=<boolean>
+
+to add new complaint:
+
+http://127.0.0.1:8000/Backend_for_Complaints/api/add_complaint.json?complaint_level=1&title=title&resolved=false&body=huhandhehandwhatnot
+
+<authorization pending>

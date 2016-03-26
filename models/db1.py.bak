@@ -4,11 +4,12 @@ db.define_table('catagory',Field('name',
 
 db.define_table('post',
                 Field('catagory','reference catagory',writable=False,readable=False),
+                Field('complaint_level','integer',default=1),
                 Field('title','string',requires=IS_NOT_EMPTY()),
                 Field('Resolved','string',requires=IS_NOT_EMPTY()),
                 Field('url',requires=IS_EMPTY_OR(IS_URL())),
                 Field('body','string',requires=IS_NOT_EMPTY()),
-                Field('votes','integer',default=0,writable=False,readable=False),
+                Field('votes','integer',default=0),
                 auth.signature)
 
 db.define_table('vote',

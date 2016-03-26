@@ -16,6 +16,36 @@ def get_catagory():
         redirect(URL('index'))
     return catagory
 
+def logged_in():
+    return dict(success=auth.is_logged_in(), user=auth.user)
+
+def logout():
+    return dict(success=True, loggedout=auth.logout())
+
+@request.restful()
+def api():
+    response.view = 'generic.'+request.extension
+    def GET(*args,**vars):
+        patterns = 'auto'
+        parser = db.parse_as_rest(patterns,args,vars)
+        if parser.status == 200:
+            return dict(content=parser.response)
+        else:
+            raise HTTP(parser.status,parser.error)
+    def POST(table_name,**vars):
+        return db[table_name].validate_and_insert(**vars)
+    def PUT(table_name,record_id,**vars):
+        return db(db[table_name]._id==record_id).update(**vars)
+    def DELETE(table_name,record_id):
+        return db(db[table_name]._id==record_id).delete()
+    return dict(GET=GET, POST=POST, PUT=PUT, DELETE=DELETE)
+
+def login():
+    userid = request.vars.userid
+    password = request.vars.password
+    user = auth.login_bare(userid,password)
+    return dict(success=False if not user else True, user=user)
+
 def index():
     #http://127.0.0.1:8000/reddit_clone/default/index
     rows =db(db.catagory).select()
