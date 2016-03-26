@@ -18,6 +18,11 @@
 </div>
 {{for comment in comments:}}
 <div class="well">
+    <table>
+        
+        <tr data-id="{{=comment.id}}"><td><button data-direction="down">-</button></td><td> &nbsp<span class="votes">{{=comment.votes}}</span>&nbsp </td><td><button data-direction="up">+</button></td>
+            </tr>
+</table>
   On {{=comment.created_on}}, {{=author(comment.created_by)}} said: "{{=comment.body}}"   
     
 </div>
@@ -25,3 +30,16 @@
 
 
 {{=form}}
+
+<script>
+    function do_ajax_vote(t,direction){
+       var id=jQuery(t).closest('tr').attr('data-id');
+       
+        jQuery.ajax({method:'post',url:'{{=URL('comm_vote_callback')}}',data:{'id':id,'direction':direction},success:function(data){                    jQuery(t).closest('tr').find('.votes').html(data);}});
+        
+    }
+    jQuery(function(){
+        jQuery('[data-direction=up').click(function(){do_ajax_vote(this,'up');});
+        jQuery('[data-direction=down').click(function(){do_ajax_vote(this,'down');});
+    });
+</script>

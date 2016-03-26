@@ -97,7 +97,7 @@ def vote_callback():
                 post.update_record(votes=post.votes+direction)
                 db.vote.insert(post=id,score=direction)
             elif vote.score!=direction:
-                post.update_record(votes=post.votes+direction)
+                post.update_record(votes=post.votes+direction*2)
                 vote.update_record(score=direction)
             else:
                 pass #voter voted twice in same direction
@@ -105,9 +105,22 @@ def vote_callback():
 
 def comm_vote_callback():
     #http://127.0.0.1:8000/reddit_clone/default/comm_vote_callback/<comm_id>/<up or down>
-    id=request.args(0,cast=int)
-    direction=request.args(1)
-    return locals()
+    vars=request.post_vars
+    if vars and auth.user:
+        id=vars.id
+        direction= 1 if vars.direction=='up' else -1
+        comm=db.comm(id)
+        if comm:
+            vote=db.comm_vote(comm=id,created_by=auth.user.id)
+            if not vote:
+                comm.update_record(votes=comm.votes+direction)
+                db.comm_vote.insert(comm=id,score=direction)
+            elif vote.score!=direction:
+                comm.update_record(votes=comm.votes+direction*2)
+                comm_vote.update_record(score=direction)
+            else:
+                pass #voter voted twice in same direction
+    return str(comm.votes)
 
 
 def user():

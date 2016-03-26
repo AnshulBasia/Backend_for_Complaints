@@ -7,7 +7,7 @@
     {{=A('Edit this post',_class="btn btn-info",_href=URL('edit_post',args=post.id))}}
     {{else:}}
     {{if not auth.user:}}
-    {{=A('Login to edit (if you created this post)',_class="btn btinfo",_href=URL('user/login',vars=dict(_next=URL(args=request.args))))}}
+    {{=A('Login to edit (if you created this post)',_class="btn btn-info",_href=URL('user/login',vars=dict(_next=URL(args=request.args))))}}
     {{pass}}
     {{pass}}
     
@@ -18,6 +18,11 @@
 </div>
 {{for comment in comments:}}
 <div class="well">
+    <table>
+        
+        <tr data-id="{{=comment.id}}"><td><button data-direction="down">-</button></td><td> &nbsp<span class="votes">{{=comment.votes}}</span>&nbsp </td><td><button data-direction="up">+</button></td>
+            </tr>
+</table>
   On {{=comment.created_on}}, {{=author(comment.created_by)}} said: "{{=comment.body}}"   
     
 </div>
