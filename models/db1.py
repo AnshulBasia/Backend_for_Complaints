@@ -2,15 +2,26 @@
 db.define_table('catagory',Field('name',
                 requires=(IS_SLUG(),IS_NOT_IN_DB(db,'catagory.name'))))
 
+from datetime import datetime,timedelta
+
 db.define_table('post',
-                Field('catagory','reference catagory'),
+                Field('catagoryy','string'),
                 Field('complaint_level','integer',default=1),
                 Field('title','string',requires=IS_NOT_EMPTY()),
                 Field('Resolved','string',requires=IS_NOT_EMPTY()),
-                Field('url',requires=IS_EMPTY_OR(IS_URL())),
-                Field('body','string',requires=IS_NOT_EMPTY()),
+                Field('url',requires=IS_EMPTY_OR(IS_URL()),default=None),
+                Field('body','string',default=''),
                 Field('votes','integer',default=0),
-                auth.signature)
+                Field('posted_by',db.users)
+                #auth.signature
+                )
+db.define_table(
+    'notifications',
+    Field('user_id', db.users),
+    Field('description', 'string'),
+    Field('is_seen', 'integer', default=0),
+    Field('created_at', 'datetime', default=datetime.now),
+)
 
 db.define_table('vote',
                 Field('post','reference post'),
@@ -18,11 +29,12 @@ db.define_table('vote',
                 auth.signature)
                 
 db.define_table('comm',
-                Field('post','reference post',writable=False,readable=False),
-                Field('parent_comm','reference comm',writable=False,readable=False),
-                Field('votes','integer',default=0,writable=False,readable=False),
+                Field('post',db.post),
+                Field('votes','integer',default=0),
                 Field('body','text'),
-                auth.signature)
+                Field('posted_by',db.users)
+                #auth.signature
+                )
 
 db.define_table('comm_vote',
                 Field('comm','reference comm'),

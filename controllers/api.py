@@ -5,18 +5,42 @@ def get_post():
         return post.as_dict() if post else None
     return locals()
 
+def add_comment():
+    if auth.is_logged_in():
+        body=str(request.vars["body"])
+        post_id=int(request.vars["id"])
+        db.comm.insert(post=post_id,body=body,posted_by=auth.user.id)
+        post=db.post(post_id)
+        return dict(success=True)
+
+def get_comments():
+    id=int(request.vars["id"])
+    comments=db(db.comm.post==id).select()
+    list=[]
+    for comm in comments:
+        if comm.post==id:
+            list.append(comm.body)
+    return list
 def add_complaint():
     if auth.is_logged_in():
+        #idm=int(request.vars["id"])
+        #user=db.users(idm)
+        resolved=str(request.vars["resolved"]).strip()
+        catagory=str(request.vars["catagoryy"]).strip()
+        complaint_level=int(request.vars["complaint_level"])
+        title=str(request.vars["title"]).strip()
         db.post.insert(
-        #catagory=str(request.vars["catagory"]),
-        complaint_level=int(request.vars["complaint_level"]),
-        title=str(request.vars["title"]),
-        Resolved=str(request.vars["resolved"]),
-        body=str(request.vars["body"])
-        #created_by=str(request.vars["created_by"]),
-            )
-        return request.vars["body"]
+            Resolved=resolved,complaint_level=complaint_level,title=title,catagoryy=catagory,posted_by=auth.user.id)
+        return auth.user.id
 
+def comment_vote():
+    if auth.is_logged_in():
+        id = int(request.vars["id"])
+        vote = int(request.vars["vote"])
+        comm=db.comm(id)
+        if comm:
+            comm.update_record(votes=comm.votes+vote)
+            return dict(success=True,comm=comm)
 def set_resolved():
     if auth.is_logged_in():
         id = int(request.vars["id"])
@@ -35,7 +59,7 @@ def up_downvote():
         if post:
             post.update_record(votes=post.votes+vote)
             return dict(success=True,post=post)
-    return id
+    return dict(success=True)
 @request.restful()
 def post():
     def GET(*args,**vars):

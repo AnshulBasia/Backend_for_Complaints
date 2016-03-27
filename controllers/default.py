@@ -16,6 +16,17 @@ def get_catagory():
         redirect(URL('index'))
     return catagory
 
+def populate_db():
+    db.users.insert(
+		first_name="John",
+		last_name="Doe",
+		email="cs1110200@cse.iitd.ac.in",
+		username="cs1110200",
+		entry_no="2011CS10200",
+		type_=0,
+		password="john",
+	)
+
 def logged_in():
     return dict(success=auth.is_logged_in(), user=auth.user)
 
@@ -45,6 +56,7 @@ def login():
     password = request.vars.password
     user = auth.login_bare(userid,password)
     return dict(success=False if not user else True, user=user)
+
 
 def index():
     #http://127.0.0.1:8000/reddit_clone/default/index

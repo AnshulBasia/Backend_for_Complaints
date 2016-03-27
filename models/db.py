@@ -90,3 +90,28 @@ auth.settings.reset_password_requires_verification = True
 
 ## after defining tables, uncomment below to enable auditing
 # auth.enable_record_versioning(db)
+db.define_table(
+    'users',
+    Field('first_name', length=128, default=''),
+    Field('last_name', length=128, default=''),
+    Field('email', length=128, unique=True),
+    Field('username', length=100, unique=True), #cs5110272
+    Field('entry_no', length=100, unique=True), #2011CS50272
+    Field('type_','integer'), # 0 for student, 1 for professor
+    Field('password', 'password', length=512, readable=False, label='Password'),
+    Field('registration_key', length=512, writable=False, readable=False, default=''),
+    Field('reset_password_key', length=512, writable=False, readable=False, default=''),
+    Field('registration_id', length=512, writable=False, readable=False, default=''),
+    Field('Hostel', 'string')
+ )
+
+custom_auth_table = db['users']
+
+auth.settings.table_user = custom_auth_table
+auth.settings.table_user_name = 'users'    #Very important to mention
+auth.settings.table_group_name = 'user_group'
+auth.settings.table_membership_name = 'user_membership'
+auth.settings.table_permission_name = 'user_permission'
+auth.settings.table_event_name = 'user_event'
+auth.settings.login_userfield = 'username'        #the loginfield will be username
+auth.define_tables(username=False)    #Creating the table

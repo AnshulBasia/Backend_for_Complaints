@@ -90,8 +90,6 @@ auth.settings.reset_password_requires_verification = True
 
 ## after defining tables, uncomment below to enable auditing
 # auth.enable_record_versioning(db)
-from datetime import datetime,timedelta
-
 db.define_table(
     'users',
     Field('first_name', length=128, default=''),
@@ -105,7 +103,6 @@ db.define_table(
     Field('reset_password_key', length=512, writable=False, readable=False, default=''),
     Field('registration_id', length=512, writable=False, readable=False, default=''),
  )
-
 
 custom_auth_table = db['users']
 
