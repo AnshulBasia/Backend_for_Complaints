@@ -7,7 +7,6 @@
 ## - user is required for authentication and authorization
 ## - download is for downloading files uploaded in the db (does streaming)
 #########################################################################
-ide=int(0)
 POSTS_PER_PAGE=10
 def get_catagory():
     catagory_name=request.args(0)
@@ -56,21 +55,8 @@ def login():
     userid = request.vars.userid
     password = request.vars.password
     user = auth.login_bare(userid,password)
-    ide=user.id
     return dict(success=False if not user else True, user=user)
 
-def add_complaint():
-    if auth.is_logged_in():
-        db.post.insert(
-        catagory=str(request.vars["catagory"]),
-        complaint_level=int(request.vars["complaint_level"]),
-        title=str(request.vars["title"]),
-        Resolved=str(request.vars["resolved"]),
-        body=str(request.vars["body"]),
-        votes=0,
-        posted_by=ide
-            )
-        return request.vars["body"]
 
 def index():
     #http://127.0.0.1:8000/reddit_clone/default/index
@@ -122,7 +108,7 @@ def list_posts_by_votes():
     page=request.args(1,cast=int,default=0)
     start=page*POSTS_PER_PAGE
     stop=start+POSTS_PER_PAGE
-    rows=db(db.post.catagory==catagory.id).select(orderby=~db.post.votes,limitby=(start,stop))
+    rows=db(db.post.catagoryy==catagory.id).select(orderby=~db.post.votes,limitby=(start,stop))
     return locals()
 
 def view_post():

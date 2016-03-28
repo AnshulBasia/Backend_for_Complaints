@@ -1,0 +1,881 @@
+(dp1
+S'output'
+p2
+S"<type 'exceptions.ValueError'> invalid literal for long() with base 10: 'maint'"
+p3
+sS'layer'
+p4
+S'C:\\Users\\ANSHUL BASIA\\Desktop\\ACAD\\Sem4\\cop290\\web2py\\applications\\Backend_for_Complaints\\controllers/api.py'
+p5
+sS'code'
+p6
+S'@request.restful()\ndef get_post():\n    def GET(id):\n        post=db.post(id)\n        return post.as_dict() if post else None\n    return locals()\n\ndef notifications():\n    if auth.is_logged_in():\n        noti = db(db.notifications.user_id==auth.user.id).select(orderby=~db.notifications.created_at)\n        db(db.notifications.user_id==auth.user.id).update(is_seen=1)\n        return dict(notifications=noti)\n        \ndef add_comment():\n    if auth.is_logged_in():\n        body=str(request.vars["body"])\n        post_id=int(request.vars["id"])\n        db.comm.insert(post=post_id,body=body,posted_by=auth.user.id)\n        post=db.post(post_id)\n        return dict(success=True)\n\ndef get_comments():\n    id=int(request.vars["id"])\n    comments=db(db.comm.post==id).select()\n    list=[]\n    for comm in comments:\n        if comm.post==id:\n            list.append(comm.body)\n    return list\ndef add_complaint():\n    if auth.is_logged_in():\n        #idm=int(request.vars["id"])\n        user=db.users(auth.user.id)\n        resolved=str(request.vars["resolved"]).strip()\n        catagory=int(request.vars["catagoryy"])\n        complaint_level=int(request.vars["complaint_level"])\n        title=str(request.vars["title"]).strip()\n        body=str(request.vars["body"]).strip()\n        db.post.insert(\n            Resolved=resolved,complaint_level=complaint_level,title=title,catagoryy=catagory,posted_by=auth.user.id,body=body)\n        hostel=user.Hostel\n        if complaint_level==1:\n            users=db(db.users).select()\n            for user in users:\n                if(user.typee==10+catagory):\n                    db.notifications.insert(user_id=user.id,typee=1,body=body,title=title,\n                                       posted_by=auth.user.id)\n                else:\n                    db.notifications.insert(user_id=user.id,typee=0,body=body,title=title,\n                                        posted_by=auth.user.id)\n        if complaint_level==2:\n            use=db(db.users).select()\n            for user in use:\n                if(user.typee==20+catagory and user.Hostel==hostel):\n                    db.notifications.insert(user_id=user.id,typee=1,body=body,title=title,\n                                        posted_by=auth.user.id)\n                if(user.typee!=20+catagory and user.Hostel==hostel):\n                    db.notifications.insert(user_id=user.id,typee=0,body=body,title=title,\n                                        posted_by=auth.user.id)\n        if complaint_level==3:\n            users=db(db.users).select()\n            for user in users:\n                if user.typee==catagory:\n                    db.notifications.insert(user_id=user.id,typee=1,body=body,title=title,\n                                        posted_by=auth.user.id)\n        return dict(success=True)\n\ndef get_complaint():\n    level=int(request.vars["level"])\n    postss=db(db.post.id).select()\n    l=[]\n    for post in postss:\n                if post.complaint_level==1:\n                    l.append(post)\n                if post.complaint_level==2:\n                    if post.posted_by.Hostel==auth.user.Hostel:\n                        l.append(post)\n                if post.complaint_level==3:\n                    if post.posted_by.id==auth.user.id:\n                        l.append(post)\n    return l\ndef comment_vote():\n    if auth.is_logged_in():\n        id = int(request.vars["id"])\n        vote = int(request.vars["vote"])\n        comm=db.comm(id)\n        if comm:\n            comm.update_record(votes=comm.votes+vote)\n            return dict(success=True,comm=comm)\ndef set_resolved():\n    if auth.is_logged_in():\n        id = int(request.vars["id"])\n        sta = str(request.vars["status"])\n        post=db.post(id)\n        if post:\n            post.update_record(Resolved=sta)\n            return dict(success=True,post=post)\n    return locals()\n\ndef up_downvote():\n    if auth.is_logged_in():\n        id = int(request.vars["id"])\n        vote = int(request.vars["vote"])\n        post=db.post(id)\n        if post:\n            post.update_record(votes=post.votes+vote)\n            return dict(success=True,post=post)\n    return dict(success=True)\n@request.restful()\ndef post():\n    def GET(*args,**vars):\n        patterns=[\'/{post.complaint_level}\',\n                 \'/catagory/id/{catagory.id}\',\n                 \'/by-user/{post.created_by}\']\n        parsed=db.parse_as_rest(patterns,args,vars)\n        if parsed.status==200:return dict(content=parsed.response)\n        raise HTTP(parsed.status,parsed.error)\n    return locals()\n@request.restful()\ndef auto():\n    def GET(*args,**vars):\n        parsed=db.parse_as_rest(\'auto\',args,vars)\n        if parsed.status==200:return dict(content=parsed.response)\n        raise HTTP(parsed.status,parsed.error)\n    return locals()\n\nresponse._vars=response._caller(get_complaint)\n'
+p7
+sS'snapshot'
+p8
+(dp9
+S'exception'
+p10
+(dp11
+S'__hash__'
+p12
+S"<method-wrapper '__hash__' of exceptions.ValueError object>"
+p13
+sS'__setattr__'
+p14
+S"<method-wrapper '__setattr__' of exceptions.ValueError object>"
+p15
+sS'__reduce_ex__'
+p16
+S'<built-in method __reduce_ex__ of exceptions.ValueError object>'
+p17
+sS'__getslice__'
+p18
+S"<method-wrapper '__getslice__' of exceptions.ValueError object>"
+p19
+sS'__getitem__'
+p20
+S"<method-wrapper '__getitem__' of exceptions.ValueError object>"
+p21
+sS'__setstate__'
+p22
+S'<built-in method __setstate__ of exceptions.ValueError object>'
+p23
+sS'__reduce__'
+p24
+S'<built-in method __reduce__ of exceptions.ValueError object>'
+p25
+sS'__str__'
+p26
+S"<method-wrapper '__str__' of exceptions.ValueError object>"
+p27
+sS'__format__'
+p28
+S'<built-in method __format__ of exceptions.ValueError object>'
+p29
+sS'__getattribute__'
+p30
+S"<method-wrapper '__getattribute__' of exceptions.ValueError object>"
+p31
+sS'__class__'
+p32
+S"<type 'exceptions.ValueError'>"
+p33
+sS'__unicode__'
+p34
+S'<built-in method __unicode__ of exceptions.ValueError object>'
+p35
+sS'__delattr__'
+p36
+S"<method-wrapper '__delattr__' of exceptions.ValueError object>"
+p37
+sS'__subclasshook__'
+p38
+S'<built-in method __subclasshook__ of type object>'
+p39
+sS'__repr__'
+p40
+S"<method-wrapper '__repr__' of exceptions.ValueError object>"
+p41
+sS'args'
+p42
+S'("invalid literal for long() with base 10: \'maint\'",)'
+p43
+sS'__dict__'
+p44
+S'{}'
+p45
+sS'__sizeof__'
+p46
+S'<built-in method __sizeof__ of exceptions.ValueError object>'
+p47
+sS'__doc__'
+p48
+S"'Inappropriate argument value (of correct type).'"
+p49
+sS'__init__'
+p50
+S"<method-wrapper '__init__' of exceptions.ValueError object>"
+p51
+sS'__new__'
+p52
+S'<built-in method __new__ of type object>'
+p53
+ssS'evalue'
+p54
+S"invalid literal for long() with base 10: 'maint'"
+p55
+sS'request'
+p56
+cgluon.html
+XML_unpickle
+p57
+(S's\x0b_\x00\x00<div><table><tr><td style="font-weight:bold;vertical-align:top;">ajax</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">application</td><td style="vertical-align:top;">:</td><td><div>Backend_for_Complaints</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">args</td><td style="vertical-align:top;">:</td><td><div><table></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">cid</td><td style="vertical-align:top;">:</td><td><div>None</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">client</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">controller</td><td style="vertical-align:top;">:</td><td><div>api</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">cookies</td><td style="vertical-align:top;">:</td><td><div><table><tr><td style="font-weight:bold;vertical-align:top;">session_id_admin</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1-792c7789-5ce7-48b4-9439-2cdd0b368018<table><tr><td style="font-weight:bold;vertical-align:top;">comment</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">domain</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">expires</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">httponly</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">max-age</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">path</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">secure</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">version</td><td style="vertical-align:top;">:</td><td><div></div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_id_backend_for_complaints</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1-097dafde-b494-48d8-be93-d18305fe59ca<table><tr><td style="font-weight:bold;vertical-align:top;">comment</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">domain</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">expires</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">httponly</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">max-age</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">path</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">secure</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">version</td><td style="vertical-align:top;">:</td><td><div></div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_id_welcome</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1-3aaa6b46-69f2-4d9a-8f0f-4ec303362fb8<table><tr><td style="font-weight:bold;vertical-align:top;">comment</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">domain</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">expires</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">httponly</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">max-age</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">path</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">secure</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">version</td><td style="vertical-align:top;">:</td><td><div></div></td></tr></table></div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">env</td><td style="vertical-align:top;">:</td><td><div><table><tr><td style="font-weight:bold;vertical-align:top;">HTTP_ACCEPT</td><td style="vertical-align:top;">:</td><td><div>text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_ACCEPT_ENCODING</td><td style="vertical-align:top;">:</td><td><div>gzip, deflate, sdch</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_ACCEPT_LANGUAGE</td><td style="vertical-align:top;">:</td><td><div>en,hi;q=0.8,en-US;q=0.6</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_CACHE_CONTROL</td><td style="vertical-align:top;">:</td><td><div>max-age=0</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_CONNECTION</td><td style="vertical-align:top;">:</td><td><div>keep-alive</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_COOKIE</td><td style="vertical-align:top;">:</td><td><div>session_id_welcome=127.0.0.1-3aaa6b46-69f2-4d9a-8f0f-4ec303362fb8; session_id_backend_for_complaints=127.0.0.1-097dafde-b494-48d8-be93-d18305fe59ca; session_id_admin=127.0.0.1-792c7789-5ce7-48b4-9439-2cdd0b368018</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_HOST</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1:8000</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_UPGRADE_INSECURE_REQUESTS</td><td style="vertical-align:top;">:</td><td><div>1</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_USER_AGENT</td><td style="vertical-align:top;">:</td><td><div>Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.87 Safari/537.36</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">PATH_INFO</td><td style="vertical-align:top;">:</td><td><div>/Backend_for_Complaints/api/get_complaint.json</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">QUERY_STRING</td><td style="vertical-align:top;">:</td><td><div>level=2</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">REMOTE_ADDR</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">REMOTE_PORT</td><td style="vertical-align:top;">:</td><td><div>56311</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">REQUEST_METHOD</td><td style="vertical-align:top;">:</td><td><div>GET</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">SCRIPT_NAME</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">SERVER_NAME</td><td style="vertical-align:top;">:</td><td><div>ANSH_27</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">SERVER_PORT</td><td style="vertical-align:top;">:</td><td><div>8000</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">SERVER_PROTOCOL</td><td style="vertical-align:top;">:</td><td><div>HTTP/1.1</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">SERVER_SOFTWARE</td><td style="vertical-align:top;">:</td><td><div>Rocket 1.2.6</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">app_folders</td><td style="vertical-align:top;">:</td><td><div>set([&#x27;C:\\\\Users\\\\ANSHUL BASIA\\\\Desktop\\\\ACAD\\\\Sem4\\\\cop290\\\\web2py\\\\applications\\\\Backend_for_Complaints\\\\&#x27;, &#x27;C:\\\\Users\\\\ANSHUL BASIA\\\\Desktop\\\\ACAD\\\\Sem4\\\\cop290\\\\web2py\\\\applications\\\\admin\\\\&#x27;, &#x27;C:\\\\Users\\\\ANSHUL BASIA\\\\Desktop\\\\ACAD\\\\Sem4\\\\cop290\\\\web2py\\\\applications\\\\welcome\\\\&#x27;])</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">applications_parent</td><td style="vertical-align:top;">:</td><td><div>C:\\Users\\ANSHUL BASIA\\Desktop\\ACAD\\Sem4\\cop290\\web2py</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">cmd_args</td><td style="vertical-align:top;">:</td><td><div><table></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">cmd_options</td><td style="vertical-align:top;">:</td><td><div>&lt;Values at 0x3280828: {&#x27;verbose&#x27;: False, &#x27;ip&#x27;: &#x27;127.0.0.1&#x27;, &#x27;debuglevel&#x27;: 30, &#x27;with_scheduler&#x27;: False, &#x27;ips&#x27;: [], &#x27;shutdown_timeout&#x27;: 5, &#x27;taskbar&#x27;: False, &#x27;with_coverage&#x27;: False, &#x27;scheduler_groups&#x27;: None, &#x27;port&#x27;: 8000, &#x27;maxthreads&#x27;: None, &#x27;softcron&#x27;: False, &#x27;server_name&#x27;: &#x27;ANSH_27&#x27;, &#x27;bpython&#x27;: False, &#x27;nogui&#x27;: False, &#x27;pid_filename&#x27;: &#x27;httpserver.pid&#x27;, &#x27;print_errors&#x27;: False, &#x27;extcron&#x27;: False, &#x27;runcron&#x27;: False, &#x27;run_system_tests&#x27;: False, &#x27;test&#x27;: None, &#x27;folder&#x27;: &#x27;C:\\\\Users\\\\ANSHUL BASIA\\\\Desktop\\\\ACAD\\\\Sem4\\\\cop290\\\\web2py&#x27;, &#x27;config&#x27;: &#x27;&#x27;, &#x27;minthreads&#x27;: None, &#x27;shell&#x27;: None, &#x27;run&#x27;: &#x27;&#x27;, &#x27;log_filename&#x27;: &#x27;httpserver.log&#x27;, &#x27;profiler_dir&#x27;: None, &#x27;args&#x27;: [&#x27;&#x27;], &#x27;socket_timeout&#x27;: 5, &#x27;ssl_ca_certificate&#x27;: None, &#x27;scheduler&#x27;: None, &#x27;interfaces&#x27;: None, &#x27;ssl_private_key&#x27;: &#x27;&#x27;, &#x27;gae&#x27;: None, &#x27;password&#x27;: &#x27;&lt;ask&gt;&#x27;, &#x27;request_queue_size&#x27;: 5, &#x27;ssl_certificate&#x27;: &#x27;&#x27;, &#x27;cronjob&#x27;: False, &#x27;numthreads&#x27;: None, &#x27;quiet&#x27;: False, &#x27;import_models&#x27;: False, &#x27;timeout&#x27;: 10, &#x27;plain&#x27;: False, &#x27;nobanner&#x27;: False}&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">db_sessions</td><td style="vertical-align:top;">:</td><td><div>set([])</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">debugging</td><td style="vertical-align:top;">:</td><td><div>True</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">gluon_parent</td><td style="vertical-align:top;">:</td><td><div>C:\\Users\\ANSHUL BASIA\\Desktop\\ACAD\\Sem4\\cop290\\web2py</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_accept</td><td style="vertical-align:top;">:</td><td><div>text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_accept_encoding</td><td style="vertical-align:top;">:</td><td><div>gzip, deflate, sdch</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_accept_language</td><td style="vertical-align:top;">:</td><td><div>en,hi;q=0.8,en-US;q=0.6</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_cache_control</td><td style="vertical-align:top;">:</td><td><div>max-age=0</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_connection</td><td style="vertical-align:top;">:</td><td><div>keep-alive</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_cookie</td><td style="vertical-align:top;">:</td><td><div>session_id_welcome=127.0.0.1-3aaa6b46-69f2-4d9a-8f0f-4ec303362fb8; session_id_backend_for_complaints=127.0.0.1-097dafde-b494-48d8-be93-d18305fe59ca; session_id_admin=127.0.0.1-792c7789-5ce7-48b4-9439-2cdd0b368018</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_host</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1:8000</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_upgrade_insecure_requests</td><td style="vertical-align:top;">:</td><td><div>1</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_user_agent</td><td style="vertical-align:top;">:</td><td><div>Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.87 Safari/537.36</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_jython</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_pypy</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_source</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">local_hosts</td><td style="vertical-align:top;">:</td><td><div><table><tr><td><div>ANSH_27.iitd.ernet.in</div></td></tr><tr><td><div>ANSH_27</div></td></tr><tr><td><div>fe80::9cf2:f81:938:4da7%5</div></td></tr><tr><td><div>::ffff:127.0.0.1</div></td></tr><tr><td><div>::1</div></td></tr><tr><td><div>10.252.220.137</div></td></tr><tr><td><div>127.0.0.1</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">path_info</td><td style="vertical-align:top;">:</td><td><div>/Backend_for_Complaints/api/get_complaint.json</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">query_string</td><td style="vertical-align:top;">:</td><td><div>level=2</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">remote_addr</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">remote_port</td><td style="vertical-align:top;">:</td><td><div>56311</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">request_method</td><td style="vertical-align:top;">:</td><td><div>GET</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">request_uri</td><td style="vertical-align:top;">:</td><td><div>/Backend_for_Complaints/api/get_complaint.json?level=2</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">script_name</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">server_name</td><td style="vertical-align:top;">:</td><td><div>ANSH_27</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">server_port</td><td style="vertical-align:top;">:</td><td><div>8000</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">server_protocol</td><td style="vertical-align:top;">:</td><td><div>HTTP/1.1</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">server_software</td><td style="vertical-align:top;">:</td><td><div>Rocket 1.2.6</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">web2py_path</td><td style="vertical-align:top;">:</td><td><div>C:\\Users\\ANSHUL BASIA\\Desktop\\ACAD\\Sem4\\cop290\\web2py</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">web2py_version</td><td style="vertical-align:top;">:</td><td><div>2.13.4-stable+timestamp.2015.12.26.04.59.39</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi.errors</td><td style="vertical-align:top;">:</td><td><div>&lt;open file &#x27;&lt;stderr&gt;&#x27;, mode &#x27;w&#x27; at 0x0223D0D0&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi.file_wrapper</td><td style="vertical-align:top;">:</td><td><div>&lt;class wsgiref.util.FileWrapper at 0x03174180&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi.input</td><td style="vertical-align:top;">:</td><td><div>&lt;socket._fileobject object at 0x098D2530&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi.multiprocess</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi.multithread</td><td style="vertical-align:top;">:</td><td><div>True</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi.run_once</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi.url_scheme</td><td style="vertical-align:top;">:</td><td><div>http</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi.version</td><td style="vertical-align:top;">:</td><td><div><table><tr><td><div>1</div></td></tr><tr><td><div>0</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi_errors</td><td style="vertical-align:top;">:</td><td><div>&lt;open file &#x27;&lt;stderr&gt;&#x27;, mode &#x27;w&#x27; at 0x0223D0D0&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi_file_wrapper</td><td style="vertical-align:top;">:</td><td><div>&lt;class wsgiref.util.FileWrapper at 0x03174180&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi_input</td><td style="vertical-align:top;">:</td><td><div>&lt;socket._fileobject object at 0x098D2530&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi_multiprocess</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi_multithread</td><td style="vertical-align:top;">:</td><td><div>True</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi_run_once</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi_url_scheme</td><td style="vertical-align:top;">:</td><td><div>http</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi_version</td><td style="vertical-align:top;">:</td><td><div><table><tr><td><div>1</div></td></tr><tr><td><div>0</div></td></tr></table></div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">extension</td><td style="vertical-align:top;">:</td><td><div>json</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">folder</td><td style="vertical-align:top;">:</td><td><div>C:\\Users\\ANSHUL BASIA\\Desktop\\ACAD\\Sem4\\cop290\\web2py\\applications\\Backend_for_Complaints\\</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">function</td><td style="vertical-align:top;">:</td><td><div>get_complaint</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">global_settings</td><td style="vertical-align:top;">:</td><td><div><table><tr><td style="font-weight:bold;vertical-align:top;">app_folders</td><td style="vertical-align:top;">:</td><td><div>set([&#x27;C:\\\\Users\\\\ANSHUL BASIA\\\\Desktop\\\\ACAD\\\\Sem4\\\\cop290\\\\web2py\\\\applications\\\\Backend_for_Complaints\\\\&#x27;, &#x27;C:\\\\Users\\\\ANSHUL BASIA\\\\Desktop\\\\ACAD\\\\Sem4\\\\cop290\\\\web2py\\\\applications\\\\admin\\\\&#x27;, &#x27;C:\\\\Users\\\\ANSHUL BASIA\\\\Desktop\\\\ACAD\\\\Sem4\\\\cop290\\\\web2py\\\\applications\\\\welcome\\\\&#x27;])</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">applications_parent</td><td style="vertical-align:top;">:</td><td><div>C:\\Users\\ANSHUL BASIA\\Desktop\\ACAD\\Sem4\\cop290\\web2py</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">cmd_args</td><td style="vertical-align:top;">:</td><td><div><table></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">cmd_options</td><td style="vertical-align:top;">:</td><td><div>&lt;Values at 0x3280828: {&#x27;verbose&#x27;: False, &#x27;ip&#x27;: &#x27;127.0.0.1&#x27;, &#x27;debuglevel&#x27;: 30, &#x27;with_scheduler&#x27;: False, &#x27;ips&#x27;: [], &#x27;shutdown_timeout&#x27;: 5, &#x27;taskbar&#x27;: False, &#x27;with_coverage&#x27;: False, &#x27;scheduler_groups&#x27;: None, &#x27;port&#x27;: 8000, &#x27;maxthreads&#x27;: None, &#x27;softcron&#x27;: False, &#x27;server_name&#x27;: &#x27;ANSH_27&#x27;, &#x27;bpython&#x27;: False, &#x27;nogui&#x27;: False, &#x27;pid_filename&#x27;: &#x27;httpserver.pid&#x27;, &#x27;print_errors&#x27;: False, &#x27;extcron&#x27;: False, &#x27;runcron&#x27;: False, &#x27;run_system_tests&#x27;: False, &#x27;test&#x27;: None, &#x27;folder&#x27;: &#x27;C:\\\\Users\\\\ANSHUL BASIA\\\\Desktop\\\\ACAD\\\\Sem4\\\\cop290\\\\web2py&#x27;, &#x27;config&#x27;: &#x27;&#x27;, &#x27;minthreads&#x27;: None, &#x27;shell&#x27;: None, &#x27;run&#x27;: &#x27;&#x27;, &#x27;log_filename&#x27;: &#x27;httpserver.log&#x27;, &#x27;profiler_dir&#x27;: None, &#x27;args&#x27;: [&#x27;&#x27;], &#x27;socket_timeout&#x27;: 5, &#x27;ssl_ca_certificate&#x27;: None, &#x27;scheduler&#x27;: None, &#x27;interfaces&#x27;: None, &#x27;ssl_private_key&#x27;: &#x27;&#x27;, &#x27;gae&#x27;: None, &#x27;password&#x27;: &#x27;&lt;ask&gt;&#x27;, &#x27;request_queue_size&#x27;: 5, &#x27;ssl_certificate&#x27;: &#x27;&#x27;, &#x27;cronjob&#x27;: False, &#x27;numthreads&#x27;: None, &#x27;quiet&#x27;: False, &#x27;import_models&#x27;: False, &#x27;timeout&#x27;: 10, &#x27;plain&#x27;: False, &#x27;nobanner&#x27;: False}&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">db_sessions</td><td style="vertical-align:top;">:</td><td><div>set([])</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">debugging</td><td style="vertical-align:top;">:</td><td><div>True</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">gluon_parent</td><td style="vertical-align:top;">:</td><td><div>C:\\Users\\ANSHUL BASIA\\Desktop\\ACAD\\Sem4\\cop290\\web2py</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_jython</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_pypy</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_source</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">local_hosts</td><td style="vertical-align:top;">:</td><td><div><table><tr><td><div>ANSH_27.iitd.ernet.in</div></td></tr><tr><td><div>ANSH_27</div></td></tr><tr><td><div>fe80::9cf2:f81:938:4da7%5</div></td></tr><tr><td><div>::ffff:127.0.0.1</div></td></tr><tr><td><div>::1</div></td></tr><tr><td><div>10.252.220.137</div></td></tr><tr><td><div>127.0.0.1</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">web2py_version</td><td style="vertical-align:top;">:</td><td><div>2.13.4-stable+timestamp.2015.12.26.04.59.39</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_https</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_local</td><td style="vertical-align:top;">:</td><td><div>True</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_restful</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_scheduler</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_shell</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">now</td><td style="vertical-align:top;">:</td><td><div>datetime.datetime(2016, 3, 28, 18, 34, 39, 776000)</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">raw_args</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">raw_extension</td><td style="vertical-align:top;">:</td><td><div>json</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">url</td><td style="vertical-align:top;">:</td><td><div>/Backend_for_Complaints/api/get_complaint.json</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">utcnow</td><td style="vertical-align:top;">:</td><td><div>datetime.datetime(2016, 3, 28, 13, 4, 39, 776000)</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi</td><td style="vertical-align:top;">:</td><td><div>&lt;gluon.main.LazyWSGI object at 0x0BAC0E70&gt;</div></td></tr></table></div>'
+tRp58
+sS'frames'
+p59
+(lp60
+(dp61
+S'file'
+p62
+S'C:\\Users\\ANSHUL BASIA\\Desktop\\ACAD\\Sem4\\cop290\\web2py\\gluon\\restricted.py'
+p63
+sS'dump'
+p64
+(dp65
+S'environment'
+p66
+S"{'A': <class 'gluon.html.A'>, 'ANY_OF': <class 'gluon.validators.ANY_OF'>, 'ASSIGNJS': <function ASSIGNJS>, 'AppConfig': <function AppConfig>, 'Auth': <class 'gluon.tools.Auth'>, 'B': <class 'gluon.html.B'>, 'BEAUTIFY': <class 'gluon.html.BEAUTIFY'>, 'BODY': <class 'gluon.html.BODY'>, 'BR': <class 'gluon.html.BR'>, 'BUTTON': <class 'gluon.html.BUTTON'>, ...}"
+p67
+sS'ccode'
+p68
+S'<code object <module> at 0BACAB18, file "C:\\User...ckend_for_Complaints\\controllers/api.py", line 1>'
+p69
+ssS'lnum'
+p70
+I227
+sS'lines'
+p71
+(dp72
+I224
+S'            ccode = code'
+p73
+sI225
+S'        else:'
+p74
+sI226
+S'            ccode = compile2(code, layer)'
+p75
+sI227
+S'        exec ccode in environment'
+p76
+sI228
+S'    except HTTP:'
+p77
+sI229
+S'        raise'
+p78
+sI230
+S'    except RestrictedError:'
+p79
+sI231
+S'        # do not encapsulate (obfuscate) the original RestrictedError'
+p80
+sI222
+S'    try:'
+p81
+sI223
+S'        if isinstance(code, types.CodeType):'
+p82
+ssS'call'
+p83
+S"(code='@request.restful()\\ndef get_post():\\n    def GET(i...\\n\\nresponse._vars=response._caller(get_complaint)\\n', environment={'A': <class 'gluon.html.A'>, 'ANY_OF': <class 'gluon.validators.ANY_OF'>, 'ASSIGNJS': <function ASSIGNJS>, 'AppConfig': <function AppConfig>, 'Auth': <class 'gluon.tools.Auth'>, 'B': <class 'gluon.html.B'>, 'BEAUTIFY': <class 'gluon.html.BEAUTIFY'>, 'BODY': <class 'gluon.html.BODY'>, 'BR': <class 'gluon.html.BR'>, 'BUTTON': <class 'gluon.html.BUTTON'>, ...}, layer=r'C:\\Users\\ANSHUL BASIA\\Desktop\\ACAD\\Sem4\\cop290\\w...cations\\Backend_for_Complaints\\controllers/api.py')"
+p84
+sS'func'
+p85
+S'restricted'
+p86
+sa(dp87
+g62
+S'C:\\Users\\ANSHUL BASIA\\Desktop\\ACAD\\Sem4\\cop290\\web2py\\applications\\Backend_for_Complaints\\controllers\\api.py'
+p88
+sg64
+(dp89
+sg70
+I127
+sg71
+(dp90
+I116
+S'        if parsed.status==200:return dict(content=parsed.response)'
+p91
+sI117
+S'        raise HTTP(parsed.status,parsed.error)'
+p92
+sI118
+S'    return locals()'
+p93
+sI119
+S'@request.restful()'
+p94
+sI120
+S'def auto():'
+p95
+sI121
+S'    def GET(*args,**vars):'
+p96
+sI122
+S"        parsed=db.parse_as_rest('auto',args,vars)"
+p97
+sI123
+S'        if parsed.status==200:return dict(content=parsed.response)'
+p98
+sI124
+S'        raise HTTP(parsed.status,parsed.error)'
+p99
+sI125
+S'    return locals()'
+p100
+ssg83
+S'()'
+p101
+sg85
+S'<module>'
+p102
+sa(dp103
+g62
+S'C:\\Users\\ANSHUL BASIA\\Desktop\\ACAD\\Sem4\\cop290\\web2py\\gluon\\globals.py'
+p104
+sg64
+(dp105
+S'self'
+p106
+S'undefined'
+p107
+sS'f'
+S'<function get_complaint>'
+p108
+ssg70
+I412
+sg71
+(dp109
+I416
+S"        self.generic_patterns = ['*']"
+p110
+sI407
+S"        self.flash = ''            # used by the default view layout"
+p111
+sI408
+S'        self.meta = Storage()      # used by web2py_ajax.html'
+p112
+sI409
+S'        self.menu = []             # used by the default view layout'
+p113
+sI410
+S'        self.files = []            # used by web2py_ajax.html'
+p114
+sI411
+S'        self._vars = None'
+p115
+sI412
+S'        self._caller = lambda f: f()'
+p116
+sI413
+S'        self._view_environment = None'
+p117
+sI414
+S'        self._custom_commit = None'
+p118
+sI415
+S'        self._custom_rollback = None'
+p119
+ssg83
+S'(f=<function get_complaint>)'
+p120
+sg85
+S'<lambda>'
+p121
+sa(dp122
+g62
+S'C:\\Users\\ANSHUL BASIA\\Desktop\\ACAD\\Sem4\\cop290\\web2py\\applications\\Backend_for_Complaints\\controllers\\api.py'
+p123
+sg64
+(dp124
+S'global db'
+p125
+S'<DAL uri="sqlite://storage.sqlite">'
+p126
+sS').select'
+p127
+g107
+sS'db.post'
+p128
+S'<Table post (id,catagoryy,complaint_level,title,...e,created_on,created_by,modified_on,modified_by)>'
+p129
+sS'postss'
+p130
+g107
+sS'db.post.id'
+p131
+S'<pydal.objects.Field object>'
+p132
+ssg70
+I70
+sg71
+(dp133
+I65
+S'                                        posted_by=auth.user.id)'
+p134
+sI66
+S'        return dict(success=True)'
+p135
+sI67
+S''
+sI68
+S'def get_complaint():'
+p136
+sI69
+S'    level=int(request.vars["level"])'
+p137
+sI70
+S'    postss=db(db.post.id).select()'
+p138
+sI71
+S'    l=[]'
+p139
+sI72
+S'    for post in postss:'
+p140
+sI73
+S'                if post.complaint_level==1:'
+p141
+sI74
+S'                    l.append(post)'
+p142
+ssg83
+S'()'
+p143
+sg85
+S'get_complaint'
+p144
+sa(dp145
+g62
+S'C:\\Users\\ANSHUL BASIA\\Desktop\\ACAD\\Sem4\\cop290\\web2py\\gluon\\packages\\dal\\pydal\\objects.py'
+p146
+sg64
+(dp147
+S'self.query'
+p148
+S'<Query (post.id IS NOT NULL)>'
+p149
+sS'adapter.select'
+p150
+S'<bound method SQLiteAdapter.select of <pydal.adapters.sqlite.SQLiteAdapter object>>'
+p151
+sS'fields'
+p152
+S'[<pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>]'
+p153
+sS'adapter'
+p154
+S'<pydal.adapters.sqlite.SQLiteAdapter object>'
+p155
+sS'attributes'
+p156
+g45
+sS'self'
+p157
+S'<Set (post.id IS NOT NULL)>'
+p158
+ssg70
+I2025
+sg71
+(dp159
+I2020
+S"                                    attributes.get('join',None),"
+p160
+sI2021
+S"                                    attributes.get('left',None),"
+p161
+sI2022
+S"                                    attributes.get('orderby',None),"
+p162
+sI2023
+S"                                    attributes.get('groupby',None))"
+p163
+sI2024
+S'        fields = adapter.expand_all(fields, tablenames)'
+p164
+sI2025
+S'        return adapter.select(self.query,fields,attributes)'
+p165
+sI2026
+S''
+sI2027
+S'    def iterselect(self, *fields, **attributes):'
+p166
+sI2028
+S'        adapter = self.db._adapter'
+p167
+sI2029
+S'        tablenames = adapter.tables(self.query,'
+p168
+ssg83
+S'(self=<Set (post.id IS NOT NULL)>, *fields=[<pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>], **attributes={})'
+p169
+sg85
+S'select'
+p170
+sa(dp171
+g62
+S'C:\\Users\\ANSHUL BASIA\\Desktop\\ACAD\\Sem4\\cop290\\web2py\\gluon\\packages\\dal\\pydal\\adapters\\sqlite.py'
+p172
+sg64
+(dp173
+S'fields'
+p174
+S'[<pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>]'
+p175
+sS'self'
+p176
+S'<pydal.adapters.sqlite.SQLiteAdapter object>'
+p177
+sS').select'
+p178
+S'<bound method SQLiteAdapter.select of <pydal.adapters.sqlite.SQLiteAdapter object>>'
+p179
+sS'attributes'
+p180
+g45
+sS'global SQLiteAdapter'
+p181
+S"<class 'pydal.adapters.sqlite.SQLiteAdapter'>"
+p182
+sS'query'
+p183
+S'<Query (post.id IS NOT NULL)>'
+p184
+sS'builtinsuper'
+p185
+S"<type 'super'>"
+p186
+ssg70
+I124
+sg71
+(dp187
+I128
+S"    'Windows':'mod_spatialite.dll',"
+p188
+sI119
+S'        Note that the entire database, rather than one record, is locked'
+p189
+sI120
+S'        (it will be locked eventually anyway by the following UPDATE).'
+p190
+sI121
+S'        """'
+p191
+sI122
+S"        if attributes.get('for_update', False) and not 'cache' in attributes:"
+p192
+sI123
+S"            self.execute('BEGIN IMMEDIATE TRANSACTION;')"
+p193
+sI124
+S'        return super(SQLiteAdapter, self).select(query, fields, attributes)'
+p194
+sI125
+S''
+sI126
+S''
+sI127
+S'SPATIALLIBS = {'
+p195
+ssg83
+S'(self=<pydal.adapters.sqlite.SQLiteAdapter object>, query=<Query (post.id IS NOT NULL)>, fields=[<pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>], attributes={})'
+p196
+sg85
+g170
+sa(dp197
+g62
+S'C:\\Users\\ANSHUL BASIA\\Desktop\\ACAD\\Sem4\\cop290\\web2py\\gluon\\packages\\dal\\pydal\\adapters\\base.py'
+p198
+sg64
+(dp199
+S'fields'
+p200
+S'[<pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>]'
+p201
+sS'self'
+p202
+S'<pydal.adapters.sqlite.SQLiteAdapter object>'
+p203
+sS'attributes'
+p204
+g45
+sS'self._select_aux'
+p205
+S'<bound method SQLiteAdapter._select_aux of <pydal.adapters.sqlite.SQLiteAdapter object>>'
+p206
+sS'sql'
+p207
+S"'SELECT  post.id, post.catagoryy, post.complaint_...odified_by FROM post WHERE (post.id IS NOT NULL);'"
+p208
+ssg70
+I1293
+sg71
+(dp209
+I1288
+S'            return cache_model('
+p210
+sI1289
+S'                key,'
+p211
+sI1290
+S'                lambda self=self,args=args:self._select_aux(*args),'
+p212
+sI1291
+S'                time_expire)'
+p213
+sI1292
+S'        else:'
+p214
+sI1293
+S'            return self._select_aux(sql,fields,attributes)'
+p215
+sI1294
+S''
+sI1295
+S'    def iterselect(self, query, fields, attributes):'
+p216
+sI1296
+S'        sql = self._select(query, fields, attributes)'
+p217
+sI1297
+S"        cacheable = attributes.get('cacheable', False)"
+p218
+ssg83
+S'(self=<pydal.adapters.sqlite.SQLiteAdapter object>, query=<Query (post.id IS NOT NULL)>, fields=[<pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>], attributes={})'
+p219
+sg85
+g170
+sa(dp220
+g62
+S'C:\\Users\\ANSHUL BASIA\\Desktop\\ACAD\\Sem4\\cop290\\web2py\\gluon\\packages\\dal\\pydal\\adapters\\base.py'
+p221
+sg64
+(dp222
+S'rows'
+p223
+S"[(1, None, None, u'Satpura_Lunch_Monday', u'false', None, u'Food was pretty bad, it actually sucked...:(\\r\\nWho eats that..   -_-', 10, None, None, u'T', datetime.datetime(2016, 3, 2, 1, 18, 46), None, datetime.datetime(2016, 3, 27, 0, 27, 15), 1), (2, None, None, u'Shiva', None, None, u'Dinner...wtf..?', 3, None, None, u'T', datetime.datetime(2016, 3, 2, 1, 20, 2), None, datetime.datetime(2016, 3, 26, 23, 47, 17), 1), (3, None, None, u'fefe', None, None, u'ded', -1, None, None, u'T', datetime.datetime(2016, 3, 2, 1, 22, 33), None, datetime.datetime(2016, 3, 7, 14, 16, 32), 101), (4, None, None, u'tsfsf', None, None, u'dfse', 1, None, None, u'T', datetime.datetime(2016, 3, 2, 1, 26, 13), None, datetime.datetime(2016, 3, 7, 14, 16, 13), 101), (5, None, None, u'tsfsf', None, None, u'dfse', 0, None, None, u'T', datetime.datetime(2016, 3, 2, 1, 27, 30), None, datetime.datetime(2016, 3, 2, 1, 27, 30), None), (6, None, None, u'cdedesa', None, None, u'xdx', -1, None, None, u'T', datetime.datetime(2016, 3, 2, 1, 27, 57), None, datetime.datetime(2016, 3, 7, 14, 16, 35), 101), (7, None, None, u'Cattle; 3 drawing by the mind is intended to say. ', None, None, u'Making a separate molecules cannot go and wringing the kernel of the course.\\n', 0, None, None, u'T', datetime.datetime(2016, 3, 2, 1, 58, 14), None, datetime.datetime(2016, 3, 2, 1, 58, 14), None), (8, None, None, u'Seals and need be prophesied for observations furnish a defe', None, None, u'Science to know to-day such as a long ago showed the.\\n', -1, None, None, u'T', datetime.datetime(2016, 3, 2, 1, 58, 14), None, datetime.datetime(2016, 3, 7, 14, 16, 45), 101), (9, None, None, u'Toes a pre-human ape-man as the amount of internal source of', None, None, u'Widely open sea too long period e.g.\\nThe beha...s--a great brazilian forest life on.\\nFurther.\\n', 0, None, None, u'T', datetime.datetime(2016, 3, 2, 1, 58, 14), None, datetime.datetime(2016, 3, 2, 1, 58, 14), None), (11, None, None, u'Listen it was near them until discovered a ton of suns. ', None, None, u'Accumulation of a time we know that grows hotter. it may be.\\n', -1, None, None, u'T', datetime.datetime(2016, 3, 2, 1, 58, 14), None, datetime.datetime(2016, 3, 7, 14, 16, 49), 101), (13, None, None, u'Mentioned the tube. Now there are so similar to compel. ', None, None, u'Candle but in this is mingled with the main li... the next page also to ask.\\nArthur antiquity.\\n', 0, None, None, u'T', datetime.datetime(2016, 3, 2, 1, 58, 14), None, datetime.datetime(2016, 3, 2, 1, 58, 14), None), (14, None, None, u'1871--a book which a fine brains from now based on the. ', None, None, u'Tethering the project gutenberg literary archi...dry air but more than our new knowledge there.\\n', 0, None, None, u'T', datetime.datetime(2016, 3, 2, 1, 58, 14), None, datetime.datetime(2016, 3, 2, 1, 58, 14), None), (15, None, None, u'37 photo: okapi and there intervened the atmosphere of a. ', None, None, u'Germination and gaining a year there is tumble...y speak the feathering of a ship without wide.\\n', 0, None, None, u'T', datetime.datetime(2016, 3, 2, 1, 58, 14), None, datetime.datetime(2016, 3, 2, 1, 58, 14), None), (16, None, None, u'Flagellates in the jackdaw balancing themselves. They sow br', None, None, u'Evening star at night to take between two eyes...tlace and of the creature.\\nWould make up for.\\n', 0, None, None, u'T', datetime.datetime(2016, 3, 2, 1, 58, 14), None, datetime.datetime(2016, 3, 2, 1, 58, 14), None), (17, None, None, u'Gold. But we have ever realised in length 7. . ', None, None, u'Handle. in the early stage in shore-pools and ... an enormous disc-like collection of atoms of.\\n', 5, None, None, u'T', datetime.datetime(2016, 3, 2, 1, 58, 14), None, datetime.datetime(2016, 3, 26, 22, 7, 38), 1), (19, None, None, u'Emmer which has been no cost and every bone muscle and. ', None, None, u'Accretion of different countries a tentacle to...-tm license.\\nThis was first the photographic.\\n', -1, None, None, u'T', datetime.datetime(2016, 3, 2, 1, 58, 14), None, datetime.datetime(2016, 3, 7, 14, 16, 55), 101), (21, None, None, u'Tenanted the following stages of project gutenberg-tm tradem', None, None, u'Mention briefly discussed elsewhere. the porta...e; and catching small and if we have from the.\\n', 0, None, None, u'T', datetime.datetime(2016, 3, 2, 1, 58, 14), None, datetime.datetime(2016, 3, 2, 1, 58, 14), None), (22, None, None, u'Midriff or charges of small fishes males six main stems gave', None, None, u'Their discovery of parallel to freshwater hydr...possible again as those that the beginning of.\\n', 0, None, None, u'T', datetime.datetime(2016, 3, 2, 1, 58, 14), None, datetime.datetime(2016, 3, 2, 1, 58, 14), None), (24, None, None, u'Hint of the waves which there is said to where does. ', None, None, u'Imagines when moving amongst fishes.\\nTo suppo...ance was very alert very like birds and three.\\n', 0, None, None, u'T', datetime.datetime(2016, 3, 2, 1, 58, 14), None, datetime.datetime(2016, 3, 2, 1, 58, 14), None), (26, None, None, u'X-rays--the discovery of a hold that these spots increase ra', None, None, u'Overcrowding of the most primitive culture.\\nW...rience for man--the metal ages. illustration:.\\n', 0, None, None, u'T', datetime.datetime(2016, 3, 2, 1, 58, 14), None, datetime.datetime(2016, 3, 2, 1, 58, 14), None), ...]"
+p224
+sS'fields'
+p225
+S'[<pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>]'
+p226
+sS'self'
+p227
+S'<pydal.adapters.sqlite.SQLiteAdapter object>'
+p228
+sS'cacheable'
+p229
+S'False'
+p230
+sS'self._colnames'
+p231
+S"['post.id', 'post.catagoryy', 'post.complaint_level', 'post.title', 'post.Resolved', 'post.url', 'post.body', 'post.votes', 'post.posted_by', 'post.created_at', 'post.is_active', 'post.created_on', 'post.created_by', 'post.modified_on', 'post.modified_by']"
+p232
+sS'processor'
+p233
+S'<bound method SQLiteAdapter.parse of <pydal.adapters.sqlite.SQLiteAdapter object>>'
+p234
+ssg70
+I1274
+sg71
+(dp235
+I1269
+S'            rows = list(rows)'
+p236
+sI1270
+S"        limitby = args_get('limitby', None) or (0,)"
+p237
+sI1271
+S'        rows = self.rowslice(rows,limitby[0],None)'
+p238
+sI1272
+S"        processor = args_get('processor', self.parse)"
+p239
+sI1273
+S"        cacheable = args_get('cacheable',False)"
+p240
+sI1274
+S'        return processor(rows,fields,self._colnames,cacheable=cacheable)'
+p241
+sI1275
+S''
+sI1276
+S'    def select(self, query, fields, attributes):'
+p242
+sI1277
+S'        """'
+p243
+sI1278
+S'        Always returns a Rows object, possibly empty.'
+p244
+ssg83
+S"(self=<pydal.adapters.sqlite.SQLiteAdapter object>, sql='SELECT  post.id, post.catagoryy, post.complaint_...odified_by FROM post WHERE (post.id IS NOT NULL);', fields=[<pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>], attributes={})"
+p245
+sg85
+S'_select_aux'
+p246
+sa(dp247
+g62
+S'C:\\Users\\ANSHUL BASIA\\Desktop\\ACAD\\Sem4\\cop290\\web2py\\gluon\\packages\\dal\\pydal\\adapters\\base.py'
+p248
+sg64
+(dp249
+S'rows'
+p250
+S"[(1, None, None, u'Satpura_Lunch_Monday', u'false', None, u'Food was pretty bad, it actually sucked...:(\\r\\nWho eats that..   -_-', 10, None, None, u'T', datetime.datetime(2016, 3, 2, 1, 18, 46), None, datetime.datetime(2016, 3, 27, 0, 27, 15), 1), (2, None, None, u'Shiva', None, None, u'Dinner...wtf..?', 3, None, None, u'T', datetime.datetime(2016, 3, 2, 1, 20, 2), None, datetime.datetime(2016, 3, 26, 23, 47, 17), 1), (3, None, None, u'fefe', None, None, u'ded', -1, None, None, u'T', datetime.datetime(2016, 3, 2, 1, 22, 33), None, datetime.datetime(2016, 3, 7, 14, 16, 32), 101), (4, None, None, u'tsfsf', None, None, u'dfse', 1, None, None, u'T', datetime.datetime(2016, 3, 2, 1, 26, 13), None, datetime.datetime(2016, 3, 7, 14, 16, 13), 101), (5, None, None, u'tsfsf', None, None, u'dfse', 0, None, None, u'T', datetime.datetime(2016, 3, 2, 1, 27, 30), None, datetime.datetime(2016, 3, 2, 1, 27, 30), None), (6, None, None, u'cdedesa', None, None, u'xdx', -1, None, None, u'T', datetime.datetime(2016, 3, 2, 1, 27, 57), None, datetime.datetime(2016, 3, 7, 14, 16, 35), 101), (7, None, None, u'Cattle; 3 drawing by the mind is intended to say. ', None, None, u'Making a separate molecules cannot go and wringing the kernel of the course.\\n', 0, None, None, u'T', datetime.datetime(2016, 3, 2, 1, 58, 14), None, datetime.datetime(2016, 3, 2, 1, 58, 14), None), (8, None, None, u'Seals and need be prophesied for observations furnish a defe', None, None, u'Science to know to-day such as a long ago showed the.\\n', -1, None, None, u'T', datetime.datetime(2016, 3, 2, 1, 58, 14), None, datetime.datetime(2016, 3, 7, 14, 16, 45), 101), (9, None, None, u'Toes a pre-human ape-man as the amount of internal source of', None, None, u'Widely open sea too long period e.g.\\nThe beha...s--a great brazilian forest life on.\\nFurther.\\n', 0, None, None, u'T', datetime.datetime(2016, 3, 2, 1, 58, 14), None, datetime.datetime(2016, 3, 2, 1, 58, 14), None), (11, None, None, u'Listen it was near them until discovered a ton of suns. ', None, None, u'Accumulation of a time we know that grows hotter. it may be.\\n', -1, None, None, u'T', datetime.datetime(2016, 3, 2, 1, 58, 14), None, datetime.datetime(2016, 3, 7, 14, 16, 49), 101), (13, None, None, u'Mentioned the tube. Now there are so similar to compel. ', None, None, u'Candle but in this is mingled with the main li... the next page also to ask.\\nArthur antiquity.\\n', 0, None, None, u'T', datetime.datetime(2016, 3, 2, 1, 58, 14), None, datetime.datetime(2016, 3, 2, 1, 58, 14), None), (14, None, None, u'1871--a book which a fine brains from now based on the. ', None, None, u'Tethering the project gutenberg literary archi...dry air but more than our new knowledge there.\\n', 0, None, None, u'T', datetime.datetime(2016, 3, 2, 1, 58, 14), None, datetime.datetime(2016, 3, 2, 1, 58, 14), None), (15, None, None, u'37 photo: okapi and there intervened the atmosphere of a. ', None, None, u'Germination and gaining a year there is tumble...y speak the feathering of a ship without wide.\\n', 0, None, None, u'T', datetime.datetime(2016, 3, 2, 1, 58, 14), None, datetime.datetime(2016, 3, 2, 1, 58, 14), None), (16, None, None, u'Flagellates in the jackdaw balancing themselves. They sow br', None, None, u'Evening star at night to take between two eyes...tlace and of the creature.\\nWould make up for.\\n', 0, None, None, u'T', datetime.datetime(2016, 3, 2, 1, 58, 14), None, datetime.datetime(2016, 3, 2, 1, 58, 14), None), (17, None, None, u'Gold. But we have ever realised in length 7. . ', None, None, u'Handle. in the early stage in shore-pools and ... an enormous disc-like collection of atoms of.\\n', 5, None, None, u'T', datetime.datetime(2016, 3, 2, 1, 58, 14), None, datetime.datetime(2016, 3, 26, 22, 7, 38), 1), (19, None, None, u'Emmer which has been no cost and every bone muscle and. ', None, None, u'Accretion of different countries a tentacle to...-tm license.\\nThis was first the photographic.\\n', -1, None, None, u'T', datetime.datetime(2016, 3, 2, 1, 58, 14), None, datetime.datetime(2016, 3, 7, 14, 16, 55), 101), (21, None, None, u'Tenanted the following stages of project gutenberg-tm tradem', None, None, u'Mention briefly discussed elsewhere. the porta...e; and catching small and if we have from the.\\n', 0, None, None, u'T', datetime.datetime(2016, 3, 2, 1, 58, 14), None, datetime.datetime(2016, 3, 2, 1, 58, 14), None), (22, None, None, u'Midriff or charges of small fishes males six main stems gave', None, None, u'Their discovery of parallel to freshwater hydr...possible again as those that the beginning of.\\n', 0, None, None, u'T', datetime.datetime(2016, 3, 2, 1, 58, 14), None, datetime.datetime(2016, 3, 2, 1, 58, 14), None), (24, None, None, u'Hint of the waves which there is said to where does. ', None, None, u'Imagines when moving amongst fishes.\\nTo suppo...ance was very alert very like birds and three.\\n', 0, None, None, u'T', datetime.datetime(2016, 3, 2, 1, 58, 14), None, datetime.datetime(2016, 3, 2, 1, 58, 14), None), (26, None, None, u'X-rays--the discovery of a hold that these spots increase ra', None, None, u'Overcrowding of the most primitive culture.\\nW...rience for man--the metal ages. illustration:.\\n', 0, None, None, u'T', datetime.datetime(2016, 3, 2, 1, 58, 14), None, datetime.datetime(2016, 3, 2, 1, 58, 14), None), ...]"
+p251
+sS'row'
+p252
+S"(15732, u'maint', 1, u'title', u'false', None, u'', 0, None, None, None, None, None, None, None)"
+p253
+ssg70
+I1764
+sg71
+(dp254
+I1760
+S'    def parse(self, rows, fields, colnames, blob_decode=True, cacheable=False):'
+p255
+sI1761
+S'        (fields_virtual, fields_lazy, tmps) = self._parse_expand_colnames(colnames)'
+p256
+sI1762
+S'        new_rows = [self._parse(row, tmps, fields, colnames, blob_decode,'
+p257
+sI1763
+S'                                cacheable, fields_virtual, fields_lazy)'
+p258
+sI1764
+S'                    for row in rows]'
+p259
+sI1765
+S''
+sI1766
+S'        rowsobj = Rows(self.db, new_rows, colnames, rawrows=rows)'
+p260
+sI1767
+S''
+sI1768
+S'        # Old stype virtual fields'
+p261
+sI1759
+S''
+ssg83
+S"(self=<pydal.adapters.sqlite.SQLiteAdapter object>, rows=[(1, None, None, u'Satpura_Lunch_Monday', u'false', None, u'Food was pretty bad, it actually sucked...:(\\r\\nWho eats that..   -_-', 10, None, None, u'T', datetime.datetime(2016, 3, 2, 1, 18, 46), None, datetime.datetime(2016, 3, 27, 0, 27, 15), 1), (2, None, None, u'Shiva', None, None, u'Dinner...wtf..?', 3, None, None, u'T', datetime.datetime(2016, 3, 2, 1, 20, 2), None, datetime.datetime(2016, 3, 26, 23, 47, 17), 1), (3, None, None, u'fefe', None, None, u'ded', -1, None, None, u'T', datetime.datetime(2016, 3, 2, 1, 22, 33), None, datetime.datetime(2016, 3, 7, 14, 16, 32), 101), (4, None, None, u'tsfsf', None, None, u'dfse', 1, None, None, u'T', datetime.datetime(2016, 3, 2, 1, 26, 13), None, datetime.datetime(2016, 3, 7, 14, 16, 13), 101), (5, None, None, u'tsfsf', None, None, u'dfse', 0, None, None, u'T', datetime.datetime(2016, 3, 2, 1, 27, 30), None, datetime.datetime(2016, 3, 2, 1, 27, 30), None), (6, None, None, u'cdedesa', None, None, u'xdx', -1, None, None, u'T', datetime.datetime(2016, 3, 2, 1, 27, 57), None, datetime.datetime(2016, 3, 7, 14, 16, 35), 101), (7, None, None, u'Cattle; 3 drawing by the mind is intended to say. ', None, None, u'Making a separate molecules cannot go and wringing the kernel of the course.\\n', 0, None, None, u'T', datetime.datetime(2016, 3, 2, 1, 58, 14), None, datetime.datetime(2016, 3, 2, 1, 58, 14), None), (8, None, None, u'Seals and need be prophesied for observations furnish a defe', None, None, u'Science to know to-day such as a long ago showed the.\\n', -1, None, None, u'T', datetime.datetime(2016, 3, 2, 1, 58, 14), None, datetime.datetime(2016, 3, 7, 14, 16, 45), 101), (9, None, None, u'Toes a pre-human ape-man as the amount of internal source of', None, None, u'Widely open sea too long period e.g.\\nThe beha...s--a great brazilian forest life on.\\nFurther.\\n', 0, None, None, u'T', datetime.datetime(2016, 3, 2, 1, 58, 14), None, datetime.datetime(2016, 3, 2, 1, 58, 14), None), (11, None, None, u'Listen it was near them until discovered a ton of suns. ', None, None, u'Accumulation of a time we know that grows hotter. it may be.\\n', -1, None, None, u'T', datetime.datetime(2016, 3, 2, 1, 58, 14), None, datetime.datetime(2016, 3, 7, 14, 16, 49), 101), (13, None, None, u'Mentioned the tube. Now there are so similar to compel. ', None, None, u'Candle but in this is mingled with the main li... the next page also to ask.\\nArthur antiquity.\\n', 0, None, None, u'T', datetime.datetime(2016, 3, 2, 1, 58, 14), None, datetime.datetime(2016, 3, 2, 1, 58, 14), None), (14, None, None, u'1871--a book which a fine brains from now based on the. ', None, None, u'Tethering the project gutenberg literary archi...dry air but more than our new knowledge there.\\n', 0, None, None, u'T', datetime.datetime(2016, 3, 2, 1, 58, 14), None, datetime.datetime(2016, 3, 2, 1, 58, 14), None), (15, None, None, u'37 photo: okapi and there intervened the atmosphere of a. ', None, None, u'Germination and gaining a year there is tumble...y speak the feathering of a ship without wide.\\n', 0, None, None, u'T', datetime.datetime(2016, 3, 2, 1, 58, 14), None, datetime.datetime(2016, 3, 2, 1, 58, 14), None), (16, None, None, u'Flagellates in the jackdaw balancing themselves. They sow br', None, None, u'Evening star at night to take between two eyes...tlace and of the creature.\\nWould make up for.\\n', 0, None, None, u'T', datetime.datetime(2016, 3, 2, 1, 58, 14), None, datetime.datetime(2016, 3, 2, 1, 58, 14), None), (17, None, None, u'Gold. But we have ever realised in length 7. . ', None, None, u'Handle. in the early stage in shore-pools and ... an enormous disc-like collection of atoms of.\\n', 5, None, None, u'T', datetime.datetime(2016, 3, 2, 1, 58, 14), None, datetime.datetime(2016, 3, 26, 22, 7, 38), 1), (19, None, None, u'Emmer which has been no cost and every bone muscle and. ', None, None, u'Accretion of different countries a tentacle to...-tm license.\\nThis was first the photographic.\\n', -1, None, None, u'T', datetime.datetime(2016, 3, 2, 1, 58, 14), None, datetime.datetime(2016, 3, 7, 14, 16, 55), 101), (21, None, None, u'Tenanted the following stages of project gutenberg-tm tradem', None, None, u'Mention briefly discussed elsewhere. the porta...e; and catching small and if we have from the.\\n', 0, None, None, u'T', datetime.datetime(2016, 3, 2, 1, 58, 14), None, datetime.datetime(2016, 3, 2, 1, 58, 14), None), (22, None, None, u'Midriff or charges of small fishes males six main stems gave', None, None, u'Their discovery of parallel to freshwater hydr...possible again as those that the beginning of.\\n', 0, None, None, u'T', datetime.datetime(2016, 3, 2, 1, 58, 14), None, datetime.datetime(2016, 3, 2, 1, 58, 14), None), (24, None, None, u'Hint of the waves which there is said to where does. ', None, None, u'Imagines when moving amongst fishes.\\nTo suppo...ance was very alert very like birds and three.\\n', 0, None, None, u'T', datetime.datetime(2016, 3, 2, 1, 58, 14), None, datetime.datetime(2016, 3, 2, 1, 58, 14), None), (26, None, None, u'X-rays--the discovery of a hold that these spots increase ra', None, None, u'Overcrowding of the most primitive culture.\\nW...rience for man--the metal ages. illustration:.\\n', 0, None, None, u'T', datetime.datetime(2016, 3, 2, 1, 58, 14), None, datetime.datetime(2016, 3, 2, 1, 58, 14), None), ...], fields=[<pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>], colnames=['post.id', 'post.catagoryy', 'post.complaint_level', 'post.title', 'post.Resolved', 'post.url', 'post.body', 'post.votes', 'post.posted_by', 'post.created_at', 'post.is_active', 'post.created_on', 'post.created_by', 'post.modified_on', 'post.modified_by'], blob_decode=True, cacheable=False)"
+p262
+sg85
+S'parse'
+p263
+sa(dp264
+g62
+S'C:\\Users\\ANSHUL BASIA\\Desktop\\ACAD\\Sem4\\cop290\\web2py\\gluon\\packages\\dal\\pydal\\adapters\\base.py'
+p265
+sg64
+(dp266
+S'blob_decode'
+p267
+S'True'
+p268
+sS'self'
+p269
+S'<pydal.adapters.sqlite.SQLiteAdapter object>'
+p270
+sS'ft'
+p271
+S"'integer'"
+p272
+sS'value'
+p273
+S"u'maint'"
+p274
+sS'self.parse_value'
+p275
+S'<bound method SQLiteAdapter.parse_value of <pydal.adapters.sqlite.SQLiteAdapter object>>'
+p276
+ssg70
+I1674
+sg71
+(dp277
+I1669
+S'                (tablename, fieldname, table, field, ft) = tmp'
+p278
+sI1670
+S'                colset = new_row.get(tablename, None)'
+p279
+sI1671
+S'                if colset is None:'
+p280
+sI1672
+S'                    colset = new_row[tablename] = self.db.Row()'
+p281
+sI1673
+S''
+sI1674
+S'                value = self.parse_value(value, ft, blob_decode)'
+p282
+sI1675
+S'                if field.filter_out:'
+p283
+sI1676
+S'                    value = field.filter_out(value)'
+p284
+sI1677
+S'                colset[fieldname] = value'
+p285
+sI1678
+S''
+ssg83
+S"(self=<pydal.adapters.sqlite.SQLiteAdapter object>, row=(15732, u'maint', 1, u'title', u'false', None, u'', 0, None, None, None, None, None, None, None), tmps=[('post', 'id', <Table post (id,catagoryy,complaint_level,title,...e,created_on,created_by,modified_on,modified_by)>, <pydal.objects.Field object>, 'id'), ('post', 'catagoryy', <Table post (id,catagoryy,complaint_level,title,...e,created_on,created_by,modified_on,modified_by)>, <pydal.objects.Field object>, 'integer'), ('post', 'complaint_level', <Table post (id,catagoryy,complaint_level,title,...e,created_on,created_by,modified_on,modified_by)>, <pydal.objects.Field object>, 'integer'), ('post', 'title', <Table post (id,catagoryy,complaint_level,title,...e,created_on,created_by,modified_on,modified_by)>, <pydal.objects.Field object>, 'string'), ('post', 'Resolved', <Table post (id,catagoryy,complaint_level,title,...e,created_on,created_by,modified_on,modified_by)>, <pydal.objects.Field object>, 'string'), ('post', 'url', <Table post (id,catagoryy,complaint_level,title,...e,created_on,created_by,modified_on,modified_by)>, <pydal.objects.Field object>, 'string'), ('post', 'body', <Table post (id,catagoryy,complaint_level,title,...e,created_on,created_by,modified_on,modified_by)>, <pydal.objects.Field object>, 'string'), ('post', 'votes', <Table post (id,catagoryy,complaint_level,title,...e,created_on,created_by,modified_on,modified_by)>, <pydal.objects.Field object>, 'integer'), ('post', 'posted_by', <Table post (id,catagoryy,complaint_level,title,...e,created_on,created_by,modified_on,modified_by)>, <pydal.objects.Field object>, 'reference users'), ('post', 'created_at', <Table post (id,catagoryy,complaint_level,title,...e,created_on,created_by,modified_on,modified_by)>, <pydal.objects.Field object>, 'datetime'), ('post', 'is_active', <Table post (id,catagoryy,complaint_level,title,...e,created_on,created_by,modified_on,modified_by)>, <pydal.objects.Field object>, 'boolean'), ('post', 'created_on', <Table post (id,catagoryy,complaint_level,title,...e,created_on,created_by,modified_on,modified_by)>, <pydal.objects.Field object>, 'datetime'), ('post', 'created_by', <Table post (id,catagoryy,complaint_level,title,...e,created_on,created_by,modified_on,modified_by)>, <pydal.objects.Field object>, 'reference auth_user'), ('post', 'modified_on', <Table post (id,catagoryy,complaint_level,title,...e,created_on,created_by,modified_on,modified_by)>, <pydal.objects.Field object>, 'datetime'), ('post', 'modified_by', <Table post (id,catagoryy,complaint_level,title,...e,created_on,created_by,modified_on,modified_by)>, <pydal.objects.Field object>, 'reference auth_user')], fields=[<pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>, <pydal.objects.Field object>], colnames=['post.id', 'post.catagoryy', 'post.complaint_level', 'post.title', 'post.Resolved', 'post.url', 'post.body', 'post.votes', 'post.posted_by', 'post.created_at', 'post.is_active', 'post.created_on', 'post.created_by', 'post.modified_on', 'post.modified_by'], blob_decode=True, cacheable=False, fields_virtual={'post': []}, fields_lazy={'post': []})"
+p286
+sg85
+S'_parse'
+p287
+sa(dp288
+g62
+S'C:\\Users\\ANSHUL BASIA\\Desktop\\ACAD\\Sem4\\cop290\\web2py\\gluon\\packages\\dal\\pydal\\adapters\\base.py'
+p289
+sg64
+(dp290
+S'field_type'
+p291
+S"'integer'"
+p292
+sS'self'
+p293
+S'<pydal.adapters.sqlite.SQLiteAdapter object>'
+p294
+sS'self.parsemap'
+p295
+S"{'bigint': <bound method SQLiteAdapter.parse_integer of <pydal.adapters.sqlite.SQLiteAdapter object>>, 'blob': <bound method SQLiteAdapter.parse_blob of <pydal.adapters.sqlite.SQLiteAdapter object>>, 'boolean': <bound method SQLiteAdapter.parse_boolean of <pydal.adapters.sqlite.SQLiteAdapter object>>, 'date': <bound method SQLiteAdapter.parse_date of <pydal.adapters.sqlite.SQLiteAdapter object>>, 'datetime': <bound method SQLiteAdapter.parse_datetime of <pydal.adapters.sqlite.SQLiteAdapter object>>, 'decimal': <bound method SQLiteAdapter.parse_decimal of <pydal.adapters.sqlite.SQLiteAdapter object>>, 'double': <bound method SQLiteAdapter.parse_double of <pydal.adapters.sqlite.SQLiteAdapter object>>, 'float': <bound method SQLiteAdapter.parse_double of <pydal.adapters.sqlite.SQLiteAdapter object>>, 'id': <bound method SQLiteAdapter.parse_id of <pydal.adapters.sqlite.SQLiteAdapter object>>, 'integer': <bound method SQLiteAdapter.parse_integer of <pydal.adapters.sqlite.SQLiteAdapter object>>, ...}"
+p296
+sS'value'
+p297
+S"'maint'"
+p298
+sS'key'
+p299
+S"'integer'"
+p300
+ssg70
+I1524
+sg71
+(dp301
+I1519
+S'            return value'
+p302
+sI1520
+S"        elif field_type == 'blob' and not blob_decode:"
+p303
+sI1521
+S'            return value'
+p304
+sI1522
+S'        else:'
+p305
+sI1523
+S'            key = REGEX_TYPE.match(field_type).group(0)'
+p306
+sI1524
+S'            return self.parsemap[key](value,field_type)'
+p307
+sI1525
+S''
+sI1526
+S'    def parse_reference(self, value, field_type):'
+p308
+sI1527
+S'        referee = field_type[10:].strip()'
+p309
+sI1528
+S"        if not '.' in referee:"
+p310
+ssg83
+S"(self=<pydal.adapters.sqlite.SQLiteAdapter object>, value='maint', field_type='integer', blob_decode=True)"
+p311
+sg85
+S'parse_value'
+p312
+sa(dp313
+g62
+S'C:\\Users\\ANSHUL BASIA\\Desktop\\ACAD\\Sem4\\cop290\\web2py\\gluon\\packages\\dal\\pydal\\adapters\\base.py'
+p314
+sg64
+(dp315
+S'global long'
+p316
+S"<type 'long'>"
+p317
+sS'value'
+p318
+S"'maint'"
+p319
+ssg70
+I1622
+sg71
+(dp320
+I1617
+S''
+sI1618
+S'    def parse_id(self, value, field_type):'
+p321
+sI1619
+S'        return long(value)'
+p322
+sI1620
+S''
+sI1621
+S'    def parse_integer(self, value, field_type):'
+p323
+sI1622
+S'        return long(value)'
+p324
+sI1623
+S''
+sI1624
+S'    def parse_double(self, value, field_type):'
+p325
+sI1625
+S'        return float(value)'
+p326
+sI1626
+S''
+ssg83
+S"(self=<pydal.adapters.sqlite.SQLiteAdapter object>, value='maint', field_type='integer')"
+p327
+sg85
+S'parse_integer'
+p328
+sasS'pyver'
+p329
+S'Python 2.7.9: C:\\Users\\ANSHUL BASIA\\Desktop\\ACAD\\Sem4\\cop290\\web2py\\web2py.exe (prefix: C:\\Python27)'
+p330
+sS'session'
+p331
+g57
+(S'sx\n\x00\x00<div><table><tr><td style="font-weight:bold;vertical-align:top;">auth</td><td style="vertical-align:top;">:</td><td><div><table><tr><td style="font-weight:bold;vertical-align:top;">expiration</td><td style="vertical-align:top;">:</td><td><div>3600</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">hmac_key</td><td style="vertical-align:top;">:</td><td><div>c3f2a4c9-95b5-4923-96a2-877f4ab8af38</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">last_visit</td><td style="vertical-align:top;">:</td><td><div>datetime.datetime(2016, 3, 28, 18, 31, 5, 488000)</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">user</td><td style="vertical-align:top;">:</td><td><div><table><tr><td style="font-weight:bold;vertical-align:top;">Hostel</td><td style="vertical-align:top;">:</td><td><div>satpura</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">email</td><td style="vertical-align:top;">:</td><td><div>dsadkm@mfksm</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">entry_no</td><td style="vertical-align:top;">:</td><td><div>dds</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">first_name</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">id</td><td style="vertical-align:top;">:</td><td><div>6L</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">last_name</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">registration_id</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">registration_key</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">reset_password_key</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">typee</td><td style="vertical-align:top;">:</td><td><div>23L</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">username</td><td style="vertical-align:top;">:</td><td><div>viru</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">user_groups</td><td style="vertical-align:top;">:</td><td><div><table></table></div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">last_orderby</td><td style="vertical-align:top;">:</td><td><div>None</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">last_query</td><td style="vertical-align:top;">:</td><td><div>db.post.id&gt;0</div></td></tr></table></div>'
+tRp332
+sS'etype'
+p333
+S"<type 'exceptions.ValueError'>"
+p334
+sS'date'
+p335
+S'Mon Mar 28 18:34:41 2016'
+p336
+sS'response'
+p337
+g57
+(S's\xc6%\x00\x00<div><table><tr><td style="font-weight:bold;vertical-align:top;">body</td><td style="vertical-align:top;">:</td><td><div>&lt;cStringIO.StringO object at 0x0B9D3860&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">cookies</td><td style="vertical-align:top;">:</td><td><div><table><tr><td style="font-weight:bold;vertical-align:top;">session_id_backend_for_complaints</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1-097dafde-b494-48d8-be93-d18305fe59ca<table><tr><td style="font-weight:bold;vertical-align:top;">comment</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">domain</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">expires</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">httponly</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">max-age</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">path</td><td style="vertical-align:top;">:</td><td><div>/</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">secure</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">version</td><td style="vertical-align:top;">:</td><td><div></div></td></tr></table></div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">delimiters</td><td style="vertical-align:top;">:</td><td><div><table><tr><td><div>{{</div></td></tr><tr><td><div>}}</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">files</td><td style="vertical-align:top;">:</td><td><div><table></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">flash</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">form_label_separator</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">formstyle</td><td style="vertical-align:top;">:</td><td><div>bootstrap3_inline</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">generic_patterns</td><td style="vertical-align:top;">:</td><td><div><table><tr><td><div>*</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">google_analytics_id</td><td style="vertical-align:top;">:</td><td><div>None</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">headers</td><td style="vertical-align:top;">:</td><td><div><table><tr><td style="font-weight:bold;vertical-align:top;">X-Powered-By</td><td style="vertical-align:top;">:</td><td><div>web2py</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">logo</td><td style="vertical-align:top;">:</td><td><div><a class="navbar-brand" href="http://www.web2py.com/" id="web2py-logo"><b>Complaints</b>&trade;&nbsp;</a></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">menu</td><td style="vertical-align:top;">:</td><td><div><table><tr><td><div><table><tr><td><div>Home</div></td></tr><tr><td><div>False</div></td></tr><tr><td><div>/Backend_for_Complaints/default/index.json</div></td></tr><tr><td><div><table></table></div></td></tr></table></div></td></tr><tr><td><div><table><tr><td><div>Maintenance</div></td></tr><tr><td><div>False</div></td></tr><tr><td><div>/Backend_for_Complaints/default/list_posts_by_votes.json/Maintenance</div></td></tr></table></div></td></tr><tr><td><div><table><tr><td><div>Acadamics</div></td></tr><tr><td><div>False</div></td></tr><tr><td><div>/Backend_for_Complaints/default/list_posts_by_votes.json/Acadamics</div></td></tr></table></div></td></tr><tr><td><div><table><tr><td><div>Food</div></td></tr><tr><td><div>False</div></td></tr><tr><td><div>/Backend_for_Complaints/default/list_posts_by_votes.json/Food</div></td></tr></table></div></td></tr><tr><td><div><table><tr><td><div>Code_Of_Conduct</div></td></tr><tr><td><div>False</div></td></tr><tr><td><div>/Backend_for_Complaints/default/list_posts_by_votes.json/Code_of_conduct</div></td></tr></table></div></td></tr><tr><td><div><table><tr><td><div>Food</div></td></tr><tr><td><div>False</div></td></tr><tr><td><div>/Backend_for_Complaints/default/list_posts_by_votes.json/food</div></td></tr></table></div></td></tr><tr><td><div><table><tr><td><div>Cataag</div></td></tr><tr><td><div>False</div></td></tr><tr><td><div>/Backend_for_Complaints/default/list_posts_by_votes.json/cataag</div></td></tr></table></div></td></tr><tr><td><div><table><tr><td><div>Hostel</div></td></tr><tr><td><div>False</div></td></tr><tr><td><div>/Backend_for_Complaints/default/list_posts_by_votes.json/hostel</div></td></tr></table></div></td></tr><tr><td><div><table><tr><td><div>Institute</div></td></tr><tr><td><div>False</div></td></tr><tr><td><div>/Backend_for_Complaints/default/list_posts_by_votes.json/institute</div></td></tr></table></div></td></tr><tr><td><div><table><tr><td><div>Individual</div></td></tr><tr><td><div>False</div></td></tr><tr><td><div>/Backend_for_Complaints/default/list_posts_by_votes.json/individual</div></td></tr></table></div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">meta</td><td style="vertical-align:top;">:</td><td><div><table><tr><td style="font-weight:bold;vertical-align:top;">author</td><td style="vertical-align:top;">:</td><td><div>Your Name &lt;you@example.com&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">description</td><td style="vertical-align:top;">:</td><td><div>a cool new app</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">generator</td><td style="vertical-align:top;">:</td><td><div>Web2py Web Framework</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">keywords</td><td style="vertical-align:top;">:</td><td><div>web2py, python, framework</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">models_to_run</td><td style="vertical-align:top;">:</td><td><div><table><tr><td><div>^\\w+\\.py$</div></td></tr><tr><td><div>^api/\\w+\\.py$</div></td></tr><tr><td><div>^api/get_complaint/\\w+\\.py$</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">postprocessing</td><td style="vertical-align:top;">:</td><td><div><table></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_client</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_cookie_compression_level</td><td style="vertical-align:top;">:</td><td><div>None</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_cookie_expires</td><td style="vertical-align:top;">:</td><td><div>None</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_cookie_key</td><td style="vertical-align:top;">:</td><td><div>None</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_data_name</td><td style="vertical-align:top;">:</td><td><div>session_data_backend_for_complaints</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_file</td><td style="vertical-align:top;">:</td><td><div>&lt;open file &#x27;C:\\\\Users\\\\ANSHUL BASIA\\\\Desktop\\\\ACAD\\\\Sem4\\\\cop290\\\\web2py\\\\applications\\\\Backend_for_Complaints\\\\sessions\\\\128\\\\1f6\\\\127.0.0.1-097dafde-b494-48d8-be93-d18305fe59ca&#x27;, mode &#x27;rb+&#x27; at 0x0A6E4E90&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_filename</td><td style="vertical-align:top;">:</td><td><div>C:\\Users\\ANSHUL BASIA\\Desktop\\ACAD\\Sem4\\cop290\\web2py\\applications\\Backend_for_Complaints\\sessions\\127.0.0.1-097dafde-b494-48d8-be93-d18305fe59ca</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_hash</td><td style="vertical-align:top;">:</td><td><div>197fede5005d20072e868a081be84eed</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_id</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1-097dafde-b494-48d8-be93-d18305fe59ca</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_id_name</td><td style="vertical-align:top;">:</td><td><div>session_id_backend_for_complaints</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_locked</td><td style="vertical-align:top;">:</td><td><div>True</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_masterapp</td><td style="vertical-align:top;">:</td><td><div>Backend_for_Complaints</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_new</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_storage_type</td><td style="vertical-align:top;">:</td><td><div>file</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">status</td><td style="vertical-align:top;">:</td><td><div>200</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">subtitle</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">title</td><td style="vertical-align:top;">:</td><td><div>Backend For Complaints</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">view</td><td style="vertical-align:top;">:</td><td><div>api/get_complaint.json</div></td></tr></table></div>'
+tRp338
+sS'locals'
+p339
+(dp340
+S'field_type'
+p341
+S"'integer'"
+p342
+sS'self'
+p343
+S'<pydal.adapters.sqlite.SQLiteAdapter object>'
+p344
+sS'value'
+p345
+S"'maint'"
+p346
+sssS'traceback'
+p347
+S'Traceback (most recent call last):\n  File "C:\\Users\\ANSHUL BASIA\\Desktop\\ACAD\\Sem4\\cop290\\web2py\\gluon\\restricted.py", line 227, in restricted\n    exec ccode in environment\n  File "C:\\Users\\ANSHUL BASIA\\Desktop\\ACAD\\Sem4\\cop290\\web2py\\applications\\Backend_for_Complaints\\controllers/api.py", line 127, in <module>\n  File "C:\\Users\\ANSHUL BASIA\\Desktop\\ACAD\\Sem4\\cop290\\web2py\\gluon\\globals.py", line 412, in <lambda>\n    self._caller = lambda f: f()\n  File "C:\\Users\\ANSHUL BASIA\\Desktop\\ACAD\\Sem4\\cop290\\web2py\\applications\\Backend_for_Complaints\\controllers/api.py", line 70, in get_complaint\n    postss=db(db.post.id).select()\n  File "C:\\Users\\ANSHUL BASIA\\Desktop\\ACAD\\Sem4\\cop290\\web2py\\gluon\\packages\\dal\\pydal\\objects.py", line 2025, in select\n    return adapter.select(self.query,fields,attributes)\n  File "C:\\Users\\ANSHUL BASIA\\Desktop\\ACAD\\Sem4\\cop290\\web2py\\gluon\\packages\\dal\\pydal\\adapters\\sqlite.py", line 124, in select\n    return super(SQLiteAdapter, self).select(query, fields, attributes)\n  File "C:\\Users\\ANSHUL BASIA\\Desktop\\ACAD\\Sem4\\cop290\\web2py\\gluon\\packages\\dal\\pydal\\adapters\\base.py", line 1293, in select\n    return self._select_aux(sql,fields,attributes)\n  File "C:\\Users\\ANSHUL BASIA\\Desktop\\ACAD\\Sem4\\cop290\\web2py\\gluon\\packages\\dal\\pydal\\adapters\\base.py", line 1274, in _select_aux\n    return processor(rows,fields,self._colnames,cacheable=cacheable)\n  File "C:\\Users\\ANSHUL BASIA\\Desktop\\ACAD\\Sem4\\cop290\\web2py\\gluon\\packages\\dal\\pydal\\adapters\\base.py", line 1764, in parse\n    for row in rows]\n  File "C:\\Users\\ANSHUL BASIA\\Desktop\\ACAD\\Sem4\\cop290\\web2py\\gluon\\packages\\dal\\pydal\\adapters\\base.py", line 1674, in _parse\n    value = self.parse_value(value, ft, blob_decode)\n  File "C:\\Users\\ANSHUL BASIA\\Desktop\\ACAD\\Sem4\\cop290\\web2py\\gluon\\packages\\dal\\pydal\\adapters\\base.py", line 1524, in parse_value\n    return self.parsemap[key](value,field_type)\n  File "C:\\Users\\ANSHUL BASIA\\Desktop\\ACAD\\Sem4\\cop290\\web2py\\gluon\\packages\\dal\\pydal\\adapters\\base.py", line 1622, in parse_integer\n    return long(value)\nValueError: invalid literal for long() with base 10: \'maint\'\n'
+p348
+s.

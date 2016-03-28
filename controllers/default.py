@@ -88,7 +88,7 @@ def list_posts_by_datetime():
     page=request.args(1,cast=int,default=0)
     start=page*POSTS_PER_PAGE
     stop=start+POSTS_PER_PAGE
-    rows=db(db.post.catagory==catagory.id).select(orderby=~db.post.created_on,limitby=(start,stop))
+    rows=db(db.post.catagoryy==catagory.id).select(orderby=~db.post.created_on,limitby=(start,stop))
     return locals()
 
 def list_posts_by_author():
@@ -108,7 +108,7 @@ def list_posts_by_votes():
     page=request.args(1,cast=int,default=0)
     start=page*POSTS_PER_PAGE
     stop=start+POSTS_PER_PAGE
-    rows=db(db.post.catagory==catagory.id).select(orderby=~db.post.votes,limitby=(start,stop))
+    rows=db(db.post.catagoryy==catagory.id).select(orderby=~db.post.votes,limitby=(start,stop))
     return locals()
 
 def view_post():
