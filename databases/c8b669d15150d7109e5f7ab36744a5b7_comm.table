@@ -56,7 +56,7 @@ I00
 sg10
 S'reference auth_user'
 p19
-ssS'created_at'
+ssS'posted_by'
 p20
 (dp21
 g4
@@ -64,14 +64,14 @@ I512
 sg5
 I00
 sg6
-I6
+I5
 sg7
-S'TIMESTAMP'
+S'INTEGER REFERENCES users (id) ON DELETE CASCADE  '
 p22
 sg9
 I00
 sg10
-S'datetime'
+S'reference users'
 p23
 ssS'is_active'
 p24
@@ -128,20 +128,20 @@ p35
 (dp36
 S'sortable'
 p37
-I3
+L3L
 sS'sql'
 p38
 S'INTEGER REFERENCES comm (id) ON DELETE CASCADE  '
 p39
 sS'length'
 p40
-I512
+L512L
 sS'notnull'
 p41
-I00
+L0L
 sS'unique'
 p42
-I00
+L0L
 sS'type'
 p43
 S'reference comm'
@@ -161,10 +161,11 @@ p47
 sg9
 I00
 sg10
-g23
-ssS'modified_on'
+S'datetime'
 p48
-(dp49
+ssS'modified_on'
+p49
+(dp50
 g4
 I512
 sg5
@@ -173,14 +174,14 @@ sg6
 I10
 sg7
 S'TIMESTAMP'
-p50
+p51
 sg9
 I00
 sg10
-g23
+g48
 ssS'post'
-p51
-(dp52
+p52
+(dp53
 g4
 I512
 sg5
@@ -189,27 +190,26 @@ sg6
 I2
 sg7
 S'INTEGER REFERENCES post (id) ON DELETE CASCADE  '
-p53
+p54
 sg9
 I00
 sg10
 S'reference post'
-p54
-ssS'posted_by'
 p55
-(dp56
+ssS'created_at'
+p56
+(dp57
 g4
 I512
 sg5
 I00
 sg6
-I5
+I6
 sg7
-S'INTEGER REFERENCES users (id) ON DELETE CASCADE  '
-p57
+S'TIMESTAMP'
+p58
 sg9
 I00
 sg10
-S'reference users'
-p58
+g48
 ss.

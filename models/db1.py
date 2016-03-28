@@ -54,10 +54,11 @@ def author(id):
     else:
         user=db.auth_user(id)
         return A('%(first_name)s %(last_name)s' %user,_href=URL('list_posts_by_author',args=user.id)) 
-from gluon.contrib.populate import populate
+"""from gluon.contrib.populate import populate
 if db(db.auth_user).count()<2:
     populate(db.auth_user,100)
     db.commit()
 if db(db.post).count()<500:
     populate(db.post,500)
     db.commit()
+    """

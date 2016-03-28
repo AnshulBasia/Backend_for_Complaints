@@ -13,7 +13,7 @@ db.define_table('post',
                 Field('body','string',default=''),
                 Field('votes','integer',default=0),
                 Field('posted_by',db.users),
-                Field('created_at', 'datetime', default=datetime.now)
+                Field('created_at', 'datetime', default=datetime.now),
                 auth.signature
                 )
                 
@@ -39,7 +39,7 @@ db.define_table('comm',
                 Field('votes','integer',default=0),
                 Field('body','text'),
                 Field('posted_by',db.users),
-                Field('created_at', 'datetime', default=datetime.now)
+                Field('created_at', 'datetime', default=datetime.now),
                 auth.signature
                 )
 
