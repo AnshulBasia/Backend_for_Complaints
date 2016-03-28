@@ -35,7 +35,7 @@ http://127.0.0.1:8000/Backend_for_Complaints/api/set_resolved.json?id=<post.id>&
 
 to add new complaint:
 
-http://127.0.0.1:8000/Backend_for_Complaints/api/add_complaint.json?catagoryy=<x>&complaint_level=<y>&title=<title>&resolved=<false>&body=<huh>&id=<1>
+http://127.0.0.1:8000/Backend_for_Complaints/api/add_complaint.json?catagoryy=<x>&complaint_level=<y>&title=<title>&resolved=<false>&body=<huh>
 
 to add a comment
 
@@ -48,3 +48,9 @@ to upvote or downvote a comment with id of the comment:
 
 http://127.0.0.1:8000/Backend_for_Complaints/api/comment_vote.json?id=<id>&vote=<x>
 votes will then be prev. votes+x
+
+for notificataions: user must be looged in
+http://127.0.0.1:8000/Backend_for_Complaints/api/notifications.json
+
+notifications for voting and comment same->easy
+

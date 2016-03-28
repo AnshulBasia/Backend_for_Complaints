@@ -97,7 +97,7 @@ db.define_table(
     Field('email', length=128, unique=True),
     Field('username', length=100, unique=True), #cs5110272
     Field('entry_no', length=100, unique=True), #2011CS50272
-    Field('type_','integer'), # 0 for student, 1 for professor
+    Field('typee','integer'), 
     Field('password', 'password', length=512, readable=False, label='Password'),
     Field('registration_key', length=512, writable=False, readable=False, default=''),
     Field('reset_password_key', length=512, writable=False, readable=False, default=''),

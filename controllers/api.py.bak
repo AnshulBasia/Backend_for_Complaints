@@ -5,6 +5,12 @@ def get_post():
         return post.as_dict() if post else None
     return locals()
 
+def notifications():
+    if auth.is_logged_in():
+        noti = db(db.notifications.user_id==auth.user.id).select(orderby=~db.notifications.created_at)
+        db(db.notifications.user_id==auth.user.id).update(is_seen=1)
+        return dict(notifications=noti)
+        
 def add_comment():
     if auth.is_logged_in():
         body=str(request.vars["body"])
@@ -24,14 +30,41 @@ def get_comments():
 def add_complaint():
     if auth.is_logged_in():
         #idm=int(request.vars["id"])
-        #user=db.users(idm)
+        user=db.users(auth.user.id)
         resolved=str(request.vars["resolved"]).strip()
-        catagory=str(request.vars["catagoryy"]).strip()
+        catagory=int(request.vars["catagoryy"])
         complaint_level=int(request.vars["complaint_level"])
         title=str(request.vars["title"]).strip()
+        body=str(request.vars["body"]).strip()
         db.post.insert(
-            Resolved=resolved,complaint_level=complaint_level,title=title,catagoryy=catagory,posted_by=auth.user.id)
-        return auth.user.id
+            Resolved=resolved,complaint_level=complaint_level,title=title,catagoryy=catagory,posted_by=auth.user.id,body=body)
+        hostel=user.Hostel
+        if complaint_level==1:
+            users=db(db.users).select()
+            for user in users:
+                if(user.typee==10+catagory):
+                    db.notifications.insert(user_id=user.id,typee=1,body=body,title=title,
+                                       posted_by=auth.user.id)
+                else:
+                    db.notifications.insert(user_id=user.id,typee=0,body=body,title=title,
+                                        posted_by=auth.user.id)
+        if complaint_level==2:
+            use=db(db.users).select()
+            for user in use:
+                if(user.typee==20+catagory and user.Hostel==hostel):
+                    db.notifications.insert(user_id=user.id,typee=1,body=body,title=title,
+                                        posted_by=auth.user.id)
+                    l.append(user.typee)
+                if(user.typee!=20+catagory and user.Hostel==hostel):
+                    db.notifications.insert(user_id=user.id,typee=0,body=body,title=title,
+                                        posted_by=auth.user.id)
+        if complaint_level==3:
+            users=db(db.users).select()
+            for user in users:
+                if user.typee==catagory:
+                    db.notifications.insert(user_id=user.id,typee=1,body=body,title=title,
+                                        posted_by=auth.user.id)
+        return dict(success=True)
 
 def comment_vote():
     if auth.is_logged_in():

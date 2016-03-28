@@ -5,23 +5,29 @@ db.define_table('catagory',Field('name',
 from datetime import datetime,timedelta
 
 db.define_table('post',
-                Field('catagoryy','string'),
+                Field('catagoryy','integer'),
                 Field('complaint_level','integer',default=1),
                 Field('title','string',requires=IS_NOT_EMPTY()),
                 Field('Resolved','string',requires=IS_NOT_EMPTY()),
                 Field('url',requires=IS_EMPTY_OR(IS_URL()),default=None),
                 Field('body','string',default=''),
                 Field('votes','integer',default=0),
-                Field('posted_by',db.users)
-                #auth.signature
+                Field('posted_by',db.users),
+                Field('created_at', 'datetime', default=datetime.now)
+                auth.signature
                 )
+                
 db.define_table(
-    'notifications',
-    Field('user_id', db.users),
-    Field('description', 'string'),
-    Field('is_seen', 'integer', default=0),
-    Field('created_at', 'datetime', default=datetime.now),
-)
+        
+        'notifications',
+        Field('user_id', db.users),
+        Field('typee','integer'),
+        Field('body','string'),
+        Field('title' , 'string'),
+        Field('posted_by',db.users),
+        Field('is_seen', 'integer', default=0),
+        Field('created_at', 'datetime', default=datetime.now),
+        )
 
 db.define_table('vote',
                 Field('post','reference post'),
@@ -30,10 +36,11 @@ db.define_table('vote',
                 
 db.define_table('comm',
                 Field('post',db.post),
-                Field('votes','integer',default=0,writable=False,readable=False),
+                Field('votes','integer',default=0),
                 Field('body','text'),
-                Field('posted_by',db.users)
-                #auth.signature
+                Field('posted_by',db.users),
+                Field('created_at', 'datetime', default=datetime.now)
+                auth.signature
                 )
 
 db.define_table('comm_vote',

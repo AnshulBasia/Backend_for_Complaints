@@ -102,6 +102,7 @@ db.define_table(
     Field('registration_key', length=512, writable=False, readable=False, default=''),
     Field('reset_password_key', length=512, writable=False, readable=False, default=''),
     Field('registration_id', length=512, writable=False, readable=False, default=''),
+    Field('Hostel', 'string')
  )
 
 custom_auth_table = db['users']
