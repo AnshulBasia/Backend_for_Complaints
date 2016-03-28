@@ -10,6 +10,9 @@ General post with id:
 http://127.0.0.1:8000/Backend_for_Complaints/api/get_post/<id>.json
 
 
+Get user with id:
+http://127.0.0.1:8000/Backend_for_Complaints/api/get_user.json?id=<id>
+
 all postes with level:
 http://127.0.0.1:8000/Backend_for_Complaints/api/post/x.json
 

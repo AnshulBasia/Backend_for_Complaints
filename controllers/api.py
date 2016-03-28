@@ -27,6 +27,11 @@ def get_comments():
         if comm.post==id:
             list.append(comm.body)
     return list
+
+def get_user():
+    id=int(request.vars["id"])
+    user=db.users(id)
+    return dict(name=user.first_name,last_name=user.last_name,Entry_no=user.entry_no,Hostel=user.Hostel)
 def add_complaint():
     if auth.is_logged_in():
         #idm=int(request.vars["id"])
