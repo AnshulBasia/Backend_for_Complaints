@@ -64,25 +64,25 @@ def add_complaint():  #api to add the complaint
             for user in users:
                 if(user.typee==10+catagory):
                     db.notifications.insert(user_id=user.id,typee=1,body=body,title=title,
-                                       posted_by=auth.user.id)
+                                       posted_by=auth.user.first_name)
                 else:
                     db.notifications.insert(user_id=user.id,typee=0,body=body,title=title,
-                                        posted_by=auth.user.id)
+                                        posted_by=auth.user.first_name)
         if complaint_level==2:
             use=db(db.users).select()
             for user in use:
                 if(user.typee==20+catagory and user.Hostel==hostel):
                     db.notifications.insert(user_id=user.id,typee=1,body=body,title=title,
-                                        posted_by=auth.user.id)
+                                        posted_by=auth.user.first_name)
                 if(user.typee!=20+catagory and user.Hostel==hostel):
                     db.notifications.insert(user_id=user.id,typee=0,body=body,title=title,
-                                        posted_by=auth.user.id)
+                                        posted_by=auth.user.first_name)
         if complaint_level==3:
             users=db(db.users).select()
             for user in users:
                 if user.typee==catagory:
                     db.notifications.insert(user_id=user.id,typee=1,body=body,title=title,
-                                        posted_by=auth.user.id)
+                                        posted_by=auth.user.first_name)
         return dict(success=True)
 
 def comment_vote():  #api to comment on the vote

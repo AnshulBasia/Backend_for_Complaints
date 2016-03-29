@@ -11,7 +11,7 @@ def notifications():  #api to get notifications for the logged in user
         db(db.notifications.user_id==auth.user.id).update(is_seen=1)
         return dict(notifications=noti)
         
-def add_comment():      #api to comment on any post
+def add_comment():      #api to comment on any post   
     if auth.is_logged_in():
         body=str(request.vars["body"])
         user=db.users(auth.user.id)
@@ -20,7 +20,7 @@ def add_comment():      #api to comment on any post
         db.comm.insert(post=post_id,body=body,posted_by=auth.user.id)
         post=db.post(post_id)
         db.notifications.insert(user_id=post.posted_by.id,typee=1,body=body,title=user.first_name,
-                                       posted_by=auth.user.id)
+                                       posted_by=auth.user.id)  #user whose post is commented on will get a notification
         return dict(success=True,post=post)
 
 def get_comments():     #api to get comments any user has posted on a particular post
@@ -64,25 +64,25 @@ def add_complaint():  #api to add the complaint
             for user in users:
                 if(user.typee==10+catagory):
                     db.notifications.insert(user_id=user.id,typee=1,body=body,title=title,
-                                       posted_by=auth.user.id)
+                                       posted_by=auth.user.first_name)
                 else:
                     db.notifications.insert(user_id=user.id,typee=0,body=body,title=title,
-                                        posted_by=auth.user.id)
+                                        posted_by=auth.user.first_name)
         if complaint_level==2:
             use=db(db.users).select()
             for user in use:
                 if(user.typee==20+catagory and user.Hostel==hostel):
                     db.notifications.insert(user_id=user.id,typee=1,body=body,title=title,
-                                        posted_by=auth.user.id)
+                                        posted_by=auth.user.first_name)
                 if(user.typee!=20+catagory and user.Hostel==hostel):
                     db.notifications.insert(user_id=user.id,typee=0,body=body,title=title,
-                                        posted_by=auth.user.id)
+                                        posted_by=auth.user.first_name)
         if complaint_level==3:
             users=db(db.users).select()
             for user in users:
                 if user.typee==catagory:
                     db.notifications.insert(user_id=user.id,typee=1,body=body,title=title,
-                                        posted_by=auth.user.id)
+                                        posted_by=auth.user.first_name)
         return dict(success=True)
 
 def comment_vote():  #api to comment on the vote
