@@ -11,13 +11,17 @@ def notifications():  #api to get notifications for the logged in user
         db(db.notifications.user_id==auth.user.id).update(is_seen=1)
         return dict(notifications=noti)
         
-def add_comment():      #api to comment on any post
+def add_comment():      #api to comment on any post   
     if auth.is_logged_in():
         body=str(request.vars["body"])
+        user=db.users(auth.user.id)
         post_id=int(request.vars["id"])
+        post=db.post(post_id)
         db.comm.insert(post=post_id,body=body,posted_by=auth.user.id)
         post=db.post(post_id)
-        return dict(success=True)
+        db.notifications.insert(user_id=post.posted_by.id,typee=1,body=body,title=user.first_name,
+                                       posted_by=auth.user.id)  #user whose post is commented on will get a notification
+        return dict(success=True,post=post)
 
 def get_comments():     #api to get comments any user has posted on a particular post
     id=int(request.vars["id"])
@@ -99,6 +103,21 @@ def set_resolved():
             return dict(success=True,post=post)
     return locals()
 
+def add_user():
+    if auth.is_logged_in():
+        user=db.users(auth.user.id)
+        if user.typee>=10 and user.typee<=29:
+            first_name=str(request.vars["first_name"]).strip()
+            last_name=str(request.vars["last_name"]).strip()
+            username=str(request.vars["username"]).strip()
+            typee=int(request.vars["typee"])
+            entry_no=str(request.vars["entry_no"]).strip()
+            Hostel=str(request.vars["Hostel"]).strip()
+            password=str(request.vars["password"]).strip()
+            email=str(request.vars["email"]).strip()
+            db.users.insert(first_name=first_name,last_name=last_name,username=username,
+                            typee=typee,entry_no=entry_no,Hostel=Hostel,password=password,email=email)
+            return dict(success=True)
 def up_downvote():  #api to vote the post
     if auth.is_logged_in():
         id = int(request.vars["id"])

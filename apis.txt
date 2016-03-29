@@ -13,6 +13,10 @@ http://127.0.0.1:8000/Backend_for_Complaints/api/get_post/<id>.json
 Get user with id:
 http://127.0.0.1:8000/Backend_for_Complaints/api/get_user.json?id=<id>
 
+to add new user (right to POR Holders):
+http://127.0.0.1:8000/Backend_for_Complaints/api/add_user.json?first_name=first_name&last_name=last_name&username=username&typee=5&entry_no=entry_no&Hostel=Hostel&password=password&email=email
+
+
 all postes with level:
 http://127.0.0.1:8000/Backend_for_Complaints/api/post/x.json
 

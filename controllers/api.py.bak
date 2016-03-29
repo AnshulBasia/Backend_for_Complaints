@@ -1,38 +1,53 @@
 @request.restful()
-def get_post():
+def get_post():  #api to get post with the id using GET
     def GET(id):
         post=db.post(id)
         return post.as_dict() if post else None
     return locals()
 
-def notifications():
+def notifications():  #api to get notifications for the logged in user
     if auth.is_logged_in():
         noti = db(db.notifications.user_id==auth.user.id).select(orderby=~db.notifications.created_at)
         db(db.notifications.user_id==auth.user.id).update(is_seen=1)
         return dict(notifications=noti)
         
-def add_comment():
+def add_comment():      #api to comment on any post
     if auth.is_logged_in():
         body=str(request.vars["body"])
+        user=db.users(auth.user.id)
         post_id=int(request.vars["id"])
+        post=db.post(post_id)
         db.comm.insert(post=post_id,body=body,posted_by=auth.user.id)
         post=db.post(post_id)
-        return dict(success=True)
+        db.notifications.insert(user_id=post.posted_by.id,typee=1,body=body,title=user.first_name,
+                                       posted_by=auth.user.id)
+        return dict(success=True,post=post)
 
-def get_comments():
+def get_comments():     #api to get comments any user has posted on a particular post
     id=int(request.vars["id"])
     comments=db(db.comm.post==id).select()
-    list=[]
+    my_data = {}
+    dict={}
+    i=0
     for comm in comments:
         if comm.post==id:
-            list.append(comm.body)
-    return list
+            my_data[i]=comm.body
+            flag=comm.posted_by.id
+            user=db.users(flag)
+            my_data[i+1]=user.first_name
+            #dict[i]=my_data
+            l=[]
+            l.append(comm.body)
+            l.append(user.first_name)
+            dict[i]=l
+            i=i+1
+    return dict
 
-def get_user():
+def get_user():  #api to get user form the primary key
     id=int(request.vars["id"])
     user=db.users(id)
     return dict(name=user.first_name,last_name=user.last_name,Entry_no=user.entry_no,Hostel=user.Hostel)
-def add_complaint():
+def add_complaint():  #api to add the complaint
     if auth.is_logged_in():
         #idm=int(request.vars["id"])
         user=db.users(auth.user.id)
@@ -70,7 +85,7 @@ def add_complaint():
                                         posted_by=auth.user.id)
         return dict(success=True)
 
-def comment_vote():
+def comment_vote():  #api to comment on the vote
     if auth.is_logged_in():
         id = int(request.vars["id"])
         vote = int(request.vars["vote"])
@@ -88,7 +103,22 @@ def set_resolved():
             return dict(success=True,post=post)
     return locals()
 
-def up_downvote():
+def add_user():
+    if auth.is_logged_in():
+        user=db.users(auth.user.id)
+        if user.typee>=10 and user.typee<=29:
+            first_name=str(request.vars["first_name"]).strip()
+            last_name=str(request.vars["last_name"]).strip()
+            username=str(request.vars["username"]).strip()
+            typee=int(request.vars["typee"])
+            entry_no=str(request.vars["entry_no"]).strip()
+            Hostel=str(request.vars["Hostel"]).strip()
+            password=str(request.vars["password"]).strip()
+            email=str(request.vars["email"]).strip()
+            db.users.insert(first_name=first_name,last_name=last_name,username=username,
+                            typee=typee,entry_no=entry_no,Hostel=Hostel,password=password,email=email)
+            return dict(success=True)
+def up_downvote():  #api to vote the post
     if auth.is_logged_in():
         id = int(request.vars["id"])
         vote = int(request.vars["vote"])
@@ -98,7 +128,7 @@ def up_downvote():
             return dict(success=True,post=post)
     return dict(success=True)
 @request.restful()
-def post():
+def post():  #api to get generic patterns using parsed json response
     def GET(*args,**vars):
         patterns=['/{post.complaint_level}',
                  '/catagory/id/{catagory.id}',

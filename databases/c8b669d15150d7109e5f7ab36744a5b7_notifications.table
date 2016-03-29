@@ -22,7 +22,7 @@ sS'type'
 p10
 S'string'
 p11
-ssS'posted_by'
+ssS'created_at'
 p12
 (dp13
 g4
@@ -30,14 +30,14 @@ I512
 sg5
 I00
 sg6
-I6
+I8
 sg7
-S'INTEGER REFERENCES users (id) ON DELETE CASCADE  '
+S'TIMESTAMP'
 p14
 sg9
 I00
 sg10
-S'reference users'
+S'datetime'
 p15
 ssS'user_id'
 p16
@@ -128,7 +128,7 @@ sg9
 I00
 sg10
 g36
-ssS'created_at'
+ssS'posted_by'
 p40
 (dp41
 g4
@@ -136,14 +136,14 @@ I512
 sg5
 I00
 sg6
-I8
+I6
 sg7
-S'TIMESTAMP'
+S'INTEGER REFERENCES users (id) ON DELETE CASCADE  '
 p42
 sg9
 I00
 sg10
-S'datetime'
+S'reference users'
 p43
 ssS'addressed_to'
 p44
