@@ -8,7 +8,7 @@
 ## - download is for downloading files uploaded in the db (does streaming)
 #########################################################################
 POSTS_PER_PAGE=10
-def get_catagory():
+def get_catagory():                                                         #for the website or the back_end
     catagory_name=request.args(0)
     catagory=db.catagory(name=catagory_name)
     if not catagory:
@@ -16,7 +16,7 @@ def get_catagory():
         redirect(URL('index'))
     return catagory
 
-def populate_db():
+def populate_db():                  #for the testing
     db.users.insert(
 		first_name="John",
 		last_name="Doe",
@@ -27,14 +27,14 @@ def populate_db():
 		password="john",
 	)
 
-def logged_in():
+def logged_in():    #session handling
     return dict(success=auth.is_logged_in(), user=auth.user)
 
-def logout():
+def logout():           #session handling
     return dict(success=True, loggedout=auth.logout())
 
 @request.restful()
-def api():
+def api():          #api to get generic patterns and getting parsed json response
     response.view = 'generic.'+request.extension
     def GET(*args,**vars):
         patterns = 'auto'
@@ -51,7 +51,7 @@ def api():
         return db(db[table_name]._id==record_id).delete()
     return dict(GET=GET, POST=POST, PUT=PUT, DELETE=DELETE)
 
-def login():
+def login():        # for api to login usin app usin gGET method
     userid = request.vars.userid
     password = request.vars.password
     user = auth.login_bare(userid,password)
@@ -70,7 +70,7 @@ def create_post():
     form=SQLFORM(db.post).process(next='view_post/[id]')
     return locals()
 @auth.requires_login()
-def edit_post():
+def edit_post():            #to edit the post
     #http://127.0.0.1:8000/reddit_clone/default/edit_post/<id>
     id=request.args(0,cast=int)
     form=SQLFORM(db.post,id,showid=False).process(next='view_post/[id]')
@@ -81,7 +81,7 @@ def list_posts_new():
     catagory=get_catagory()
     return locals()
 
-def list_posts_by_datetime():
+def list_posts_by_datetime():       #sort posts to show the latest first
     #http://127.0.0.1:8000/reddit_clone/default/list_posts_by_datetime/<catagory>/<page>
     response.view='default/list_posts_by_votes.html'
     catagory=get_catagory()
@@ -111,7 +111,7 @@ def list_posts_by_votes():
     rows=db(db.post.catagoryy==catagory.id).select(orderby=~db.post.votes,limitby=(start,stop))
     return locals()
 
-def view_post():
+def view_post():        #to view the post
     #http://127.0.0.1:8000/reddit_clone/default/view_post/<id>
     id=request.args(0,cast=int)
     post=db.post(id) or redirect(URL('index'))
@@ -126,7 +126,7 @@ def view_post():
     return locals()
 
 
-def vote_callback():
+def vote_callback():            #voting at backend
     #http://127.0.0.1:8000/reddit_clone/default/vote_callback/?id=2&&direction=up
     vars=request.post_vars
     if vars and auth.user:
@@ -145,7 +145,7 @@ def vote_callback():
                 pass #voter voted twice in same direction
     return str(post.votes)
 
-def comm_vote_callback():
+def comm_vote_callback():       #voting for comments
     #http://127.0.0.1:8000/reddit_clone/default/comm_vote_callback/<comm_id>/<up or down>
     vars=request.post_vars
     if vars and auth.user:

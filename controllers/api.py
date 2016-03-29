@@ -1,17 +1,17 @@
 @request.restful()
-def get_post():
+def get_post():  #api to get post with the id using GET
     def GET(id):
         post=db.post(id)
         return post.as_dict() if post else None
     return locals()
 
-def notifications():
+def notifications():  #api to get notifications for the logged in user
     if auth.is_logged_in():
         noti = db(db.notifications.user_id==auth.user.id).select(orderby=~db.notifications.created_at)
         db(db.notifications.user_id==auth.user.id).update(is_seen=1)
         return dict(notifications=noti)
         
-def add_comment():
+def add_comment():      #api to comment on any post
     if auth.is_logged_in():
         body=str(request.vars["body"])
         post_id=int(request.vars["id"])
@@ -19,7 +19,7 @@ def add_comment():
         post=db.post(post_id)
         return dict(success=True)
 
-def get_comments():
+def get_comments():     #api to get comments any user has posted on a particular post
     id=int(request.vars["id"])
     comments=db(db.comm.post==id).select()
     my_data = {}
@@ -39,11 +39,11 @@ def get_comments():
             i=i+1
     return dict
 
-def get_user():
+def get_user():  #api to get user form the primary key
     id=int(request.vars["id"])
     user=db.users(id)
     return dict(name=user.first_name,last_name=user.last_name,Entry_no=user.entry_no,Hostel=user.Hostel)
-def add_complaint():
+def add_complaint():  #api to add the complaint
     if auth.is_logged_in():
         #idm=int(request.vars["id"])
         user=db.users(auth.user.id)
@@ -81,7 +81,7 @@ def add_complaint():
                                         posted_by=auth.user.id)
         return dict(success=True)
 
-def comment_vote():
+def comment_vote():  #api to comment on the vote
     if auth.is_logged_in():
         id = int(request.vars["id"])
         vote = int(request.vars["vote"])
@@ -99,7 +99,7 @@ def set_resolved():
             return dict(success=True,post=post)
     return locals()
 
-def up_downvote():
+def up_downvote():  #api to vote the post
     if auth.is_logged_in():
         id = int(request.vars["id"])
         vote = int(request.vars["vote"])
@@ -109,7 +109,7 @@ def up_downvote():
             return dict(success=True,post=post)
     return dict(success=True)
 @request.restful()
-def post():
+def post():  #api to get generic patterns using parsed json response
     def GET(*args,**vars):
         patterns=['/{post.complaint_level}',
                  '/catagory/id/{catagory.id}',
