@@ -92,7 +92,7 @@ auth.settings.reset_password_requires_verification = True
 # auth.enable_record_versioning(db)
 db.define_table(
     'users',
-    Field('first_name', length=128, default=''),
+    Field('first_name', 'string',length=128, default=''),
     Field('last_name', length=128, default=''),
     Field('email', length=128, unique=True),
     Field('username', length=100, unique=True), #cs5110272

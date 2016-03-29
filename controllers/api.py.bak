@@ -20,7 +20,7 @@ def add_comment():      #api to comment on any post
         db.comm.insert(post=post_id,body=body,posted_by=auth.user.id)
         post=db.post(post_id)
         db.notifications.insert(user_id=post.posted_by.id,typee=1,body=body,title=user.first_name,
-                                       posted_by=auth.user.id)  #user whose post is commented on will get a notification
+                                       posted_by=auth.user.first_name)  #user whose post is commented on will get a notification
         return dict(success=True,post=post)
 
 def get_comments():     #api to get comments any user has posted on a particular post

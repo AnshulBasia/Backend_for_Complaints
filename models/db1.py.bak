@@ -24,7 +24,7 @@ db.define_table(
         Field('typee','integer'),
         Field('body','string'),
         Field('title' , 'string'),
-        Field('posted_by',db.users),
+        Field('posted_by','string'),
         Field('is_seen', 'integer', default=0),
         Field('created_at', 'datetime', default=datetime.now),
         )
