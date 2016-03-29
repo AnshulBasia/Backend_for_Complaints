@@ -22,11 +22,22 @@ def add_comment():
 def get_comments():
     id=int(request.vars["id"])
     comments=db(db.comm.post==id).select()
-    list=[]
+    my_data = {}
+    dict={}
+    i=0
     for comm in comments:
         if comm.post==id:
-            list.append(comm.body)
-    return list
+            my_data[i]=comm.body
+            flag=comm.posted_by.id
+            user=db.users(flag)
+            my_data[i+1]=user.first_name
+            #dict[i]=my_data
+            l=[]
+            l.append(comm.body)
+            l.append(user.first_name)
+            dict[i]=l
+            i=i+1
+    return dict
 
 def get_user():
     id=int(request.vars["id"])
